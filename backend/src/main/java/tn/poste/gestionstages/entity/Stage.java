@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import tn.poste.gestionstages.enums.StatutStage;
 import tn.poste.gestionstages.enums.TypeStage;
 
@@ -37,10 +39,12 @@ public class Stage {
     private LocalDate dateFin;
 
     @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(name = "type_stage", nullable = false)
     private TypeStage typeStage;
 
     @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(nullable = false)
     private StatutStage statut = StatutStage.OUVERT;
 
