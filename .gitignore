@@ -1,0 +1,11 @@
+# IntelliJ
+.idea/
+*.iml
+
+# Backend (Maven/Java)
+backend/target/
+
+# Frontend (Angular, à venir)
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
