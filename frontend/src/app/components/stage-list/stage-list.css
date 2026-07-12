@@ -1,0 +1,13 @@
+.stage-list-container {
+  padding: 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+table {
+  width: 100%;
+}
+
+.error {
+  color: #b00020;
+}
