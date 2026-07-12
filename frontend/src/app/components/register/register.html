@@ -1,0 +1,91 @@
+<div class="auth-container">
+  <mat-card class="auth-card">
+    <mat-card-header>
+      <mat-card-title>Inscription</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nom</mat-label>
+          <input matInput name="nom" [(ngModel)]="request.nom" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Prénom</mat-label>
+          <input matInput name="prenom" [(ngModel)]="request.prenom" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" name="email" [(ngModel)]="request.email" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Mot de passe</mat-label>
+          <input matInput type="password" name="motDePasse" [(ngModel)]="request.motDePasse" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Rôle</mat-label>
+          <mat-select name="role" [(ngModel)]="request.role" required>
+            <mat-option value="STAGIAIRE">Stagiaire</mat-option>
+            <mat-option value="ENCADRANT">Encadrant</mat-option>
+            <mat-option value="ADMIN">Admin</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        @if (request.role === 'STAGIAIRE') {
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Établissement</mat-label>
+            <input matInput name="etablissement" [(ngModel)]="request.etablissement" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Niveau d'étude</mat-label>
+            <input matInput name="niveauEtude" [(ngModel)]="request.niveauEtude">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Filière</mat-label>
+            <input matInput name="filiere" [(ngModel)]="request.filiere">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Téléphone</mat-label>
+            <input matInput name="telephone" [(ngModel)]="request.telephone">
+          </mat-form-field>
+        }
+
+        @if (request.role === 'ENCADRANT') {
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Service</mat-label>
+            <input matInput name="service" [(ngModel)]="request.service" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Poste</mat-label>
+            <input matInput name="poste" [(ngModel)]="request.poste">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Téléphone</mat-label>
+            <input matInput name="telephone" [(ngModel)]="request.telephone">
+          </mat-form-field>
+        }
+
+        @if (error) {
+          <p class="error">{{ error }}</p>
+        }
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="!registerForm.valid || loading" class="full-width">
+          {{ loading ? 'Inscription...' : "S'inscrire" }}
+        </button>
+      </form>
+
+      <p class="link-text">
+        Déjà un compte ? <a routerLink="/login">Se connecter</a>
+      </p>
+    </mat-card-content>
+  </mat-card>
+</div>
