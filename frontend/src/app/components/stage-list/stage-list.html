@@ -1,5 +1,9 @@
 <div class="stage-list-container">
-  <h1>Liste des stages disponibles</h1>
+  <div class="header-row">
+      <h1>Liste des stages disponibles</h1>
+      <a mat-raised-button color="primary" routerLink="/stages/nouveau">+ Nouveau stage</a>
+  </div>
+     <h1>Liste des stages disponibles</h1>
 
   @if (loading) {
     <mat-spinner></mat-spinner>

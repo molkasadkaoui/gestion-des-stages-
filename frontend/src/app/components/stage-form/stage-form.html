@@ -1,0 +1,71 @@
+<div class="form-container">
+  <mat-card class="form-card">
+    <mat-card-header>
+      <mat-card-title>Créer un nouveau stage</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form (ngSubmit)="onSubmit()" #stageForm="ngForm">
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Titre</mat-label>
+          <input matInput name="titre" [(ngModel)]="stage.titre" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Description</mat-label>
+          <textarea matInput name="description" [(ngModel)]="stage.description" rows="3"></textarea>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Service</mat-label>
+          <input matInput name="service" [(ngModel)]="stage.service" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Type de stage</mat-label>
+          <mat-select name="typeStage" [(ngModel)]="stage.typeStage" required>
+            <mat-option value="OBSERVATION">Observation</mat-option>
+            <mat-option value="INITIATION">Initiation</mat-option>
+            <mat-option value="PFE">PFE</mat-option>
+            <mat-option value="ETE">Été</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Date de début</mat-label>
+          <input matInput [matDatepicker]="pickerDebut" name="dateDebut" [(ngModel)]="dateDebutModel" required>
+          <mat-datepicker-toggle matSuffix [for]="pickerDebut"></mat-datepicker-toggle>
+          <mat-datepicker #pickerDebut></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Date de fin</mat-label>
+          <input matInput [matDatepicker]="pickerFin" name="dateFin" [(ngModel)]="dateFinModel" required>
+          <mat-datepicker-toggle matSuffix [for]="pickerFin"></mat-datepicker-toggle>
+          <mat-datepicker #pickerFin></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nombre de places</mat-label>
+          <input matInput type="number" name="nbPlaces" [(ngModel)]="stage.nbPlaces" min="1" required>
+        </mat-form-field>
+
+        @if (error) {
+          <p class="error">{{ error }}</p>
+        }
+
+        @if (success) {
+          <p class="success">{{ success }}</p>
+        }
+
+        <div class="actions">
+          <button mat-button type="button" routerLink="/stages">Annuler</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="!stageForm.valid || loading">
+            {{ loading ? 'Création...' : 'Créer le stage' }}
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
