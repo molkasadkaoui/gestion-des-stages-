@@ -7,6 +7,12 @@
 table {
   width: 100%;
 }
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
 
 .error {
   color: #b00020;

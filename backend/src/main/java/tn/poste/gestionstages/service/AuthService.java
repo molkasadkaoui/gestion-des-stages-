@@ -39,6 +39,8 @@ public class AuthService {
         utilisateur = utilisateurRepository.save(utilisateur);
 
         // 2. Créer le profil spécifique selon le rôle
+        Long profilId = null;
+
         if (request.getRole() == Role.STAGIAIRE) {
             Stagiaire stagiaire = new Stagiaire();
             stagiaire.setUtilisateur(utilisateur);
@@ -46,7 +48,8 @@ public class AuthService {
             stagiaire.setNiveauEtude(request.getNiveauEtude());
             stagiaire.setFiliere(request.getFiliere());
             stagiaire.setTelephone(request.getTelephone());
-            stagiaireRepository.save(stagiaire);
+            stagiaire = stagiaireRepository.save(stagiaire);
+            profilId = stagiaire.getId();
 
         } else if (request.getRole() == Role.ENCADRANT) {
             Encadrant encadrant = new Encadrant();
@@ -54,7 +57,8 @@ public class AuthService {
             encadrant.setService(request.getService());
             encadrant.setPoste(request.getPoste());
             encadrant.setTelephone(request.getTelephone());
-            encadrantRepository.save(encadrant);
+            encadrant = encadrantRepository.save(encadrant);
+            profilId = encadrant.getId();
         }
         // Si ADMIN : rien de plus à créer, l'utilisateur de base suffit
 
@@ -63,7 +67,8 @@ public class AuthService {
                 utilisateur.getNom(),
                 utilisateur.getPrenom(),
                 utilisateur.getEmail(),
-                utilisateur.getRole()
+                utilisateur.getRole(),
+                profilId
         );
     }
 
@@ -80,12 +85,24 @@ public class AuthService {
             throw new IllegalStateException("Ce compte a été désactivé.");
         }
 
+        Long profilId = null;
+        if (utilisateur.getRole() == Role.STAGIAIRE) {
+            profilId = stagiaireRepository.findByUtilisateurId(utilisateur.getId())
+                    .map(Stagiaire::getId)
+                    .orElse(null);
+        } else if (utilisateur.getRole() == Role.ENCADRANT) {
+            profilId = encadrantRepository.findByUtilisateurId(utilisateur.getId())
+                    .map(Encadrant::getId)
+                    .orElse(null);
+        }
+
         return new AuthResponse(
                 utilisateur.getId(),
                 utilisateur.getNom(),
                 utilisateur.getPrenom(),
                 utilisateur.getEmail(),
-                utilisateur.getRole()
+                utilisateur.getRole(),
+                profilId
         );
     }
 }

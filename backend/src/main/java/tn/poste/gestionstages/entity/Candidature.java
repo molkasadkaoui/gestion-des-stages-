@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import tn.poste.gestionstages.enums.StatutCandidature;
 
 import java.time.LocalDateTime;
@@ -31,6 +33,7 @@ public class Candidature {
     private LocalDateTime dateCandidature;
 
     @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(nullable = false)
     private StatutCandidature statut = StatutCandidature.EN_ATTENTE;
 

@@ -23,4 +23,5 @@ export interface AuthResponse {
   prenom: string;
   email: string;
   role: string;
+  profilId: number | null;
 }
