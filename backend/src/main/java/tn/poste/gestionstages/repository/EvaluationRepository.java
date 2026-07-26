@@ -1,7 +1,7 @@
 package tn.poste.gestionstages.repository;
 
-import tn.poste.gestionstages.entity.Evaluation;
 import org.springframework.data.jpa.repository.JpaRepository;
+import tn.poste.gestionstages.entity.Evaluation;
 
 import java.util.Optional;
 

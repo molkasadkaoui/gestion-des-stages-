@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import tn.poste.gestionstages.enums.StatutRapport;
 
 import java.time.LocalDateTime;
@@ -30,6 +32,7 @@ public class Rapport {
     private LocalDateTime dateDepot;
 
     @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(nullable = false)
     private StatutRapport statut = StatutRapport.DEPOSE;
 

@@ -1,7 +1,7 @@
 package tn.poste.gestionstages.repository;
 
-import tn.poste.gestionstages.entity.Rapport;
 import org.springframework.data.jpa.repository.JpaRepository;
+import tn.poste.gestionstages.entity.Rapport;
 
 import java.util.List;
 
