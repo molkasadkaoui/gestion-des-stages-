@@ -3,9 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Candidature, CandidatureRequest } from '../models/candidature.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class CandidatureService {
   private apiUrl = 'http://localhost:8081/api/candidatures';
 
@@ -15,7 +13,19 @@ export class CandidatureService {
     return this.http.post<Candidature>(this.apiUrl, request);
   }
 
+  getAll(): Observable<Candidature[]> {
+    return this.http.get<Candidature[]>(this.apiUrl);
+  }
+
   getCandidaturesByStagiaire(stagiaireId: number): Observable<Candidature[]> {
     return this.http.get<Candidature[]>(`${this.apiUrl}/stagiaire/${stagiaireId}`);
+  }
+
+  accepter(id: number): Observable<Candidature> {
+    return this.http.patch<Candidature>(`${this.apiUrl}/${id}/accepter`, {});
+  }
+
+  refuser(id: number): Observable<Candidature> {
+    return this.http.patch<Candidature>(`${this.apiUrl}/${id}/refuser`, {});
   }
 }

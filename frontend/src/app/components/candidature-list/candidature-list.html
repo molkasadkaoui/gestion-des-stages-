@@ -1,0 +1,52 @@
+<div class="container">
+  <h1>Gestion des candidatures</h1>
+
+  @if (loading) {
+    <mat-spinner></mat-spinner>
+  }
+
+  @if (!loading) {
+    <table mat-table [dataSource]="candidatures" class="mat-elevation-z2">
+
+      <ng-container matColumnDef="stagiaireNom">
+        <th mat-header-cell *matHeaderCellDef>Stagiaire</th>
+        <td mat-cell *matCellDef="let c">{{ c.stagiaireNom }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="stageTitre">
+        <th mat-header-cell *matHeaderCellDef>Stage</th>
+        <td mat-cell *matCellDef="let c">{{ c.stageTitre }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="dateCandidature">
+        <th mat-header-cell *matHeaderCellDef>Date</th>
+        <td mat-cell *matCellDef="let c">{{ c.dateCandidature | date:'dd/MM/yyyy' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="statut">
+        <th mat-header-cell *matHeaderCellDef>Statut</th>
+        <td mat-cell *matCellDef="let c">
+          <mat-chip [color]="c.statut === 'ACCEPTEE' ? 'primary' : c.statut === 'REFUSEE' ? 'warn' : undefined">
+            {{ c.statut }}
+          </mat-chip>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let c">
+          @if (c.statut === 'EN_ATTENTE') {
+            <button mat-button color="primary" (click)="accepter(c)">Accepter</button>
+            <button mat-button color="warn" (click)="refuser(c)">Refuser</button>
+          }
+          @if (c.statut === 'ACCEPTEE') {
+            <button mat-button (click)="affecter(c)">Affecter encadrant</button>
+          }
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  }
+</div>

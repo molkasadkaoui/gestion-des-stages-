@@ -1,1 +1,155 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+}
+
+.auth-container, .form-container {
+  min-height: calc(100vh - 64px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  background: linear-gradient(135deg, #F4F5F9 0%, #E8EAF3 100%);
+}
+
+.auth-card, .form-card {
+  width: 100%;
+  border-radius: 20px !important;
+  box-shadow: 0 12px 40px rgba(27, 31, 92, 0.12) !important;
+  padding: 32px 28px !important;
+  border-top: 4px solid #F5A623 !important;
+  background: #ffffff !important;
+  margin: 0 auto;
+}
+
+.auth-card mat-card-header, .form-card mat-card-header {
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.auth-card mat-card-title, .form-card mat-card-title {
+  color: #1B1F5C !important;
+  font-size: 26px !important;
+  font-weight: 700 !important;
+  text-align: center;
+  margin: 0 !important;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+.mat-mdc-form-field {
+  margin-bottom: 8px;
+}
+
+.mat-mdc-text-field-wrapper {
+  padding: 0 4px;
+}
+
+.error {
+  color: #c62828;
+  background: #fdecea;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.success {
+  color: #1b6e4f;
+  background: #e6f4ec;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+button[mat-raised-button][color="primary"] {
+  border-radius: 10px !important;
+  height: 48px;
+  font-weight: 600 !important;
+  font-size: 15px;
+  letter-spacing: 0.3px;
+  text-transform: none;
+  box-shadow: 0 6px 16px rgba(27, 31, 92, 0.25) !important;
+}
+
+button[mat-stroked-button] {
+  border-radius: 10px !important;
+  height: 46px;
+  font-weight: 600 !important;
+}
+
+.link-text {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #6b6b7a;
+}
+
+.link-text a {
+  color: #1B1F5C;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.link-text a:hover {
+  text-decoration: underline;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+table.mat-elevation-z2 {
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(27, 31, 92, 0.1) !important;
+}
+
+.mat-mdc-header-row {
+  background-color: #1B1F5C;
+}
+
+.mat-mdc-header-cell {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.mat-mdc-row:hover {
+  background-color: #F4F5F9;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 28px;
+  background-color: #1B1F5C;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+}
+
+.app-logo {
+  height: 38px;
+  width: auto;
+  border-radius: 4px;
+}
+
+.app-title {
+  font-size: 19px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.3px;
+}
