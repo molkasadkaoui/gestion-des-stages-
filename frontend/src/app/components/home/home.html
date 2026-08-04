@@ -4,13 +4,13 @@
       <img src="/logo-poste.webp" alt="La Poste Tunisienne" class="home-logo">
     </div>
 
-    <h1 class="home-title">Gestion des Stages</h1>
-    <p class="home-subtitle">La Poste Tunisienne</p>
-    <p class="home-tagline">Plateforme de suivi et de gestion des stages, de la candidature à l'évaluation.</p>
+    <h1 class="home-title">{{ 'NAV.TITLE' | translate }}</h1>
+    <p class="home-subtitle">{{ 'HOME.SUBTITLE' | translate }}</p>
+    <p class="home-tagline">{{ 'HOME.TAGLINE' | translate }}</p>
 
     <div class="home-actions">
-      <a mat-raised-button color="primary" routerLink="/login" class="home-btn">Se connecter</a>
-      <a mat-stroked-button routerLink="/register" class="home-btn home-btn-outline">S'inscrire</a>
+      <a mat-raised-button color="primary" routerLink="/login" class="home-btn">{{ 'HOME.LOGIN_BTN' | translate }}</a>
+      <a mat-stroked-button routerLink="/register" class="home-btn home-btn-outline">{{ 'HOME.REGISTER_BTN' | translate }}</a>
     </div>
   </div>
 </div>

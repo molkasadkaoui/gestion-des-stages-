@@ -1,7 +1,42 @@
 @if (showHeader()) {
   <header class="app-header">
-    <img src="/logo-poste.webp" alt="La Poste Tunisienne" class="app-logo">
-    <span class="app-title">Gestion des Stages</span>
+    <div class="app-header-left">
+      <img src="/logo-poste.webp" alt="La Poste Tunisienne" class="app-logo">
+      <span class="app-title">{{ 'NAV.TITLE' | translate }}</span>
+    </div>
+
+    <nav class="app-nav">
+      @if (currentUser) {
+        <a routerLink="/stages" class="nav-link">{{ 'NAV.STAGES' | translate }}</a>
+
+        @if (currentUser.role === 'STAGIAIRE') {
+          <a routerLink="/mes-candidatures" class="nav-link">{{ 'NAV.MES_CANDIDATURES' | translate }}</a>
+          <a routerLink="/mon-affectation" class="nav-link">{{ 'NAV.MON_AFFECTATION' | translate }}</a>
+          <a routerLink="/rapports/nouveau" class="nav-link">{{ 'NAV.DEPOSER_RAPPORT' | translate }}</a>
+        }
+
+        @if (currentUser.role === 'ADMIN') {
+          <a routerLink="/candidatures" class="nav-link">{{ 'NAV.CANDIDATURES' | translate }}</a>
+        }
+
+        @if (currentUser.role === 'ENCADRANT') {
+          <a routerLink="/evaluations/nouveau" class="nav-link">{{ 'NAV.EVALUER' | translate }}</a>
+        }
+
+        <span class="user-info">{{ currentUser.prenom }} ({{ currentUser.role }})</span>
+      }
+
+      <button mat-stroked-button class="lang-btn" (click)="toggleLanguage()">
+        {{ languageService.currentLang === 'fr' ? 'العربية' : 'Français' }}
+      </button>
+
+      @if (currentUser) {
+        <button mat-stroked-button class="logout-btn" (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          {{ 'NAV.DECONNEXION' | translate }}
+        </button>
+      }
+    </nav>
   </header>
 }
 

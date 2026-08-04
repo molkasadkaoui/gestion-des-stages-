@@ -1,0 +1,28 @@
+<div class="container">
+  <h1>{{ 'MON_AFFECTATION.TITLE' | translate }}</h1>
+
+  @if (loading) {
+    <mat-spinner></mat-spinner>
+  }
+
+  @if (!loading && affectations.length === 0) {
+    <p class="empty-message">{{ 'MON_AFFECTATION.EMPTY' | translate }}</p>
+  }
+
+  @for (a of affectations; track a.id) {
+    <mat-card class="affectation-card">
+      <mat-card-content>
+        <p class="label">{{ 'MON_AFFECTATION.STAGE' | translate }}</p>
+        <p class="value">{{ a.stageTitre }}</p>
+
+        <p class="label">{{ 'MON_AFFECTATION.ENCADRANT' | translate }}</p>
+        <p class="value">{{ a.encadrantNom }}</p>
+
+        <p class="label">{{ 'MON_AFFECTATION.DATE' | translate }}</p>
+        <p class="value">{{ a.dateAffectation | date:'dd/MM/yyyy' }}</p>
+
+        <p class="affectation-id">{{ 'MON_AFFECTATION.AFFECTATION_ID' | translate: { id: a.id } }}</p>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

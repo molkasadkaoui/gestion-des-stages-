@@ -2,3 +2,22 @@
   max-width: 460px;
   margin: 0 auto;
 }
+
+.loading-center {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0;
+}
+
+.affectation-info {
+  background: #F4F5F9;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+}
+
+.affectation-info p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #1B1F5C;
+}

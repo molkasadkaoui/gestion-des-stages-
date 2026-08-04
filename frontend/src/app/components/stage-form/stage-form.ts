@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { StageService } from '../../services/stage';
 import { Stage } from '../../models/stage.model';
 
@@ -18,7 +19,7 @@ import { Stage } from '../../models/stage.model';
   imports: [
     CommonModule, FormsModule, RouterLink,
     MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule,
-    MatSelectModule, MatDatepickerModule, MatNativeDateModule
+    MatSelectModule, MatDatepickerModule, MatNativeDateModule, TranslatePipe
   ],
   templateUrl: './stage-form.html',
   styleUrl: './stage-form.css'
@@ -56,12 +57,12 @@ export class StageForm {
     this.stageService.createStage(payload).subscribe({
       next: () => {
         this.loading = false;
-        this.success = 'Stage créé avec succès !';
-        setTimeout(() => this.router.navigate(['/stages']), 1200);
+        this.success = 'STAGE_FORM.SUCCESS';
+        setTimeout(() => void this.router.navigate(['/stages']), 1200);
       },
       error: (err) => {
         this.loading = false;
-        this.error = err.error?.message || 'Erreur lors de la création du stage';
+        this.error = err.error?.message || 'STAGE_FORM.ERROR';
         console.error(err);
       }
     });

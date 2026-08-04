@@ -20,4 +20,8 @@ export class AffectationService {
   getByEncadrant(encadrantId: number): Observable<Affectation[]> {
     return this.http.get<Affectation[]>(`${this.apiUrl}/encadrant/${encadrantId}`);
   }
+
+  getByStagiaire(stagiaireId: number): Observable<Affectation[]> {
+    return this.http.get<Affectation[]>(`${this.apiUrl}/stagiaire/${stagiaireId}`);
+  }
 }

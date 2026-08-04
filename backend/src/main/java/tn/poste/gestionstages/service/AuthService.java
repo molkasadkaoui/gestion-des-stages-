@@ -22,6 +22,7 @@ public class AuthService {
     private final StagiaireRepository stagiaireRepository;
     private final EncadrantRepository encadrantRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
     public AuthResponse register(RegisterRequest request) {
 
@@ -29,7 +30,6 @@ public class AuthService {
             throw new IllegalArgumentException("Cet email est déjà utilisé.");
         }
 
-        // 1. Créer l'utilisateur de base
         Utilisateur utilisateur = new Utilisateur();
         utilisateur.setNom(request.getNom());
         utilisateur.setPrenom(request.getPrenom());
@@ -38,7 +38,6 @@ public class AuthService {
         utilisateur.setRole(request.getRole());
         utilisateur = utilisateurRepository.save(utilisateur);
 
-        // 2. Créer le profil spécifique selon le rôle
         Long profilId = null;
 
         if (request.getRole() == Role.STAGIAIRE) {
@@ -60,7 +59,8 @@ public class AuthService {
             encadrant = encadrantRepository.save(encadrant);
             profilId = encadrant.getId();
         }
-        // Si ADMIN : rien de plus à créer, l'utilisateur de base suffit
+
+        String token = jwtUtil.generateToken(utilisateur.getEmail(), utilisateur.getRole().name(), utilisateur.getId());
 
         return new AuthResponse(
                 utilisateur.getId(),
@@ -68,7 +68,8 @@ public class AuthService {
                 utilisateur.getPrenom(),
                 utilisateur.getEmail(),
                 utilisateur.getRole(),
-                profilId
+                profilId,
+                token
         );
     }
 
@@ -96,13 +97,16 @@ public class AuthService {
                     .orElse(null);
         }
 
+        String token = jwtUtil.generateToken(utilisateur.getEmail(), utilisateur.getRole().name(), utilisateur.getId());
+
         return new AuthResponse(
                 utilisateur.getId(),
                 utilisateur.getNom(),
                 utilisateur.getPrenom(),
                 utilisateur.getEmail(),
                 utilisateur.getRole(),
-                profilId
+                profilId,
+                token
         );
     }
 }

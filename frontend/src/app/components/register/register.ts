@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+import { TranslatePipe } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth';
 import { RegisterRequest } from '../../models/auth.model';
 
@@ -15,7 +16,7 @@ import { RegisterRequest } from '../../models/auth.model';
   standalone: true,
   imports: [
     CommonModule, FormsModule, RouterLink,
-    MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatSelectModule
+    MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatSelectModule, TranslatePipe
   ],
   templateUrl: './register.html',
   styleUrl: './register.css'
@@ -38,11 +39,11 @@ export class Register {
     this.authService.register(this.request).subscribe({
       next: () => {
         this.loading = false;
-        this.router.navigate(['/stages']);
+        void this.router.navigate(['/stages']);
       },
       error: (err) => {
         this.loading = false;
-        this.error = err.error?.message || 'Erreur lors de l\'inscription';
+        this.error = err.error?.message || 'REGISTER.ERROR';
         console.error(err);
       }
     });

@@ -59,6 +59,13 @@ public class AffectationService {
                 .toList();
     }
 
+    public List<AffectationResponse> listerParStagiaire(Long stagiaireId) {
+        return affectationRepository.findByCandidature_Stagiaire_Id(stagiaireId)
+                .stream()
+                .map(this::toResponse)
+                .toList();
+    }
+
     private AffectationResponse toResponse(Affectation a) {
         return new AffectationResponse(
                 a.getId(),

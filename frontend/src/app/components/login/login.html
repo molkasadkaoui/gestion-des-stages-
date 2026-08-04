@@ -1,34 +1,32 @@
 <div class="auth-container">
   <mat-card class="auth-card">
     <mat-card-header>
-      <mat-card-title>Connexion</mat-card-title>
+      <mat-card-title>{{ 'LOGIN.TITLE' | translate }}</mat-card-title>
     </mat-card-header>
 
     <mat-card-content>
       <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Email</mat-label>
+          <mat-label>{{ 'LOGIN.EMAIL' | translate }}</mat-label>
           <input matInput type="email" name="email" [(ngModel)]="credentials.email" required>
-          <mat-icon matSuffix>email</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Mot de passe</mat-label>
+          <mat-label>{{ 'LOGIN.PASSWORD' | translate }}</mat-label>
           <input matInput type="password" name="motDePasse" [(ngModel)]="credentials.motDePasse" required>
-          <mat-icon matSuffix>lock</mat-icon>
         </mat-form-field>
 
         @if (error) {
-          <p class="error">{{ error }}</p>
+          <p class="error">{{ error | translate }}</p>
         }
 
         <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid || loading" class="full-width">
-          {{ loading ? 'Connexion...' : 'Se connecter' }}
+          {{ (loading ? 'LOGIN.SUBMITTING' : 'LOGIN.SUBMIT') | translate }}
         </button>
       </form>
 
       <p class="link-text">
-        Pas encore de compte ? <a routerLink="/register">S'inscrire</a>
+        {{ 'LOGIN.NO_ACCOUNT' | translate }} <a routerLink="/register">{{ 'LOGIN.REGISTER_LINK' | translate }}</a>
       </p>
     </mat-card-content>
   </mat-card>

@@ -5,13 +5,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { TranslatePipe } from '@ngx-translate/core';
 import { EvaluationService } from '../../services/evaluation';
 import { EvaluationRequest } from '../../models/evaluation.model';
 
 @Component({
   selector: 'app-evaluation-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule],
+  imports: [CommonModule, FormsModule, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule, TranslatePipe],
   templateUrl: './evaluation-form.html',
   styleUrl: './evaluation-form.css'
 })
@@ -31,12 +32,12 @@ export class EvaluationForm {
     this.evaluationService.evaluer(this.request).subscribe({
       next: () => {
         this.loading = false;
-        this.success = 'Évaluation enregistrée avec succès !';
+        this.success = 'EVALUATION_FORM.SUCCESS';
         this.request = { affectationId: 0, note: 0, commentaire: '' };
       },
       error: (err) => {
         this.loading = false;
-        this.error = err.error?.message || 'Erreur lors de l\'évaluation';
+        this.error = err.error?.message || 'EVALUATION_FORM.ERROR';
       }
     });
   }

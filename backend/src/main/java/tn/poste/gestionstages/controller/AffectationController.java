@@ -33,4 +33,8 @@ public class AffectationController {
     public ResponseEntity<List<AffectationResponse>> listerParEncadrant(@PathVariable Long encadrantId) {
         return ResponseEntity.ok(affectationService.listerParEncadrant(encadrantId));
     }
+    @GetMapping("/stagiaire/{stagiaireId}")
+    public ResponseEntity<List<AffectationResponse>> listerParStagiaire(@PathVariable Long stagiaireId) {
+        return ResponseEntity.ok(affectationService.listerParStagiaire(stagiaireId));
+    }
 }

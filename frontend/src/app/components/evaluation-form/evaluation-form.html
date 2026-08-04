@@ -1,31 +1,31 @@
 <div class="form-container">
   <mat-card class="form-card">
     <mat-card-header>
-      <mat-card-title>Évaluer un stagiaire</mat-card-title>
+      <mat-card-title>{{ 'EVALUATION_FORM.TITLE' | translate }}</mat-card-title>
     </mat-card-header>
 
     <mat-card-content>
       <form (ngSubmit)="onSubmit()" #ef="ngForm">
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>ID de l'affectation</mat-label>
+          <mat-label>{{ 'EVALUATION_FORM.AFFECTATION_ID' | translate }}</mat-label>
           <input matInput type="number" name="affectationId" [(ngModel)]="request.affectationId" required>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Note (/20)</mat-label>
+          <mat-label>{{ 'EVALUATION_FORM.NOTE' | translate }}</mat-label>
           <input matInput type="number" step="0.5" min="0" max="20" name="note" [(ngModel)]="request.note" required>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Commentaire</mat-label>
+          <mat-label>{{ 'EVALUATION_FORM.COMMENTAIRE' | translate }}</mat-label>
           <textarea matInput name="commentaire" [(ngModel)]="request.commentaire" rows="3"></textarea>
         </mat-form-field>
 
-        @if (error) { <p class="error">{{ error }}</p> }
-        @if (success) { <p class="success">{{ success }}</p> }
+        @if (error) { <p class="error">{{ error | translate }}</p> }
+        @if (success) { <p class="success">{{ success | translate }}</p> }
 
         <button mat-raised-button color="primary" type="submit" [disabled]="!ef.valid || loading" class="full-width">
-          {{ loading ? 'Envoi...' : 'Enregistrer l\'évaluation' }}
+          {{ (loading ? 'EVALUATION_FORM.SUBMITTING' : 'EVALUATION_FORM.SUBMIT') | translate }}
         </button>
       </form>
     </mat-card-content>

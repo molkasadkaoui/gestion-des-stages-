@@ -6,6 +6,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Stage } from '../../models/stage.model';
 import { StageService } from '../../services/stage';
 import { CandidatureService } from '../../services/candidature';
@@ -16,7 +17,7 @@ import { AuthService } from '../../services/auth';
   standalone: true,
   imports: [
     CommonModule, RouterLink, MatTableModule, MatChipsModule,
-    MatProgressSpinnerModule, MatButtonModule
+    MatProgressSpinnerModule, MatButtonModule, TranslatePipe
   ],
   templateUrl: './stage-list.html',
   styleUrl: './stage-list.css'
@@ -32,7 +33,8 @@ export class StageList implements OnInit {
     private candidatureService: CandidatureService,
     private authService: AuthService,
     private cdr: ChangeDetectorRef,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -56,6 +58,19 @@ export class StageList implements OnInit {
     return user?.role === 'STAGIAIRE';
   }
 
+  get isAdmin(): boolean {
+    const user = this.authService.getCurrentUser();
+    return user?.role === 'ADMIN';
+  }
+
+  typeKey(type: string): string {
+    return 'STAGES.TYPE_' + type;
+  }
+
+  statutKey(statut: string): string {
+    return 'STAGES.STATUT_' + statut;
+  }
+
   postuler(stage: Stage): void {
     const user = this.authService.getCurrentUser();
     if (!user || !user.profilId) {
@@ -68,7 +83,7 @@ export class StageList implements OnInit {
       stageId: stage.id
     }).subscribe({
       next: () => {
-        this.snackBar.open('Candidature envoyée avec succès !', 'Fermer', { duration: 3000 });
+        this.snackBar.open(this.translate.instant('STAGES.SUCCESS_POSTULER'), 'Fermer', { duration: 3000 });
       },
       error: (err) => {
         const message = err.error?.message || 'Erreur lors de l\'envoi de la candidature';

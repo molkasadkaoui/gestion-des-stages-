@@ -15,4 +15,5 @@ public class AuthResponse {
     private String email;
     private Role role;
     private Long profilId;
+    private String token;
 }

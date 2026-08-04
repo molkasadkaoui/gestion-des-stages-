@@ -24,4 +24,5 @@ export interface AuthResponse {
   email: string;
   role: string;
   profilId: number | null;
+  token: string;
 }
