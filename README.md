@@ -138,10 +138,3 @@ npm run dev
 2. **Build production** → `npm run build` (frontend) et `./mvnw package` (backend)
 3. **Déploiement** → Utiliser le JAR généré et le dist/ du frontend
 
-## 📞 Support
-
-Pour toute question ou problème, contacte l'équipe de développement.
-
----
-
-**Fait avec ❤️ pour La Poste Tunisienne**
