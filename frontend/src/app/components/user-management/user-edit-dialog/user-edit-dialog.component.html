@@ -1,0 +1,84 @@
+<h2 mat-dialog-title>
+  {{ isNew ? ('USER_MANAGEMENT.ADD_USER' | translate) : ('USER_MANAGEMENT.EDIT_USER' | translate) }}
+</h2>
+
+<mat-dialog-content>
+  <div class="dialog-form">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'USER_MANAGEMENT.FIRSTNAME' | translate }}</mat-label>
+      <input matInput [(ngModel)]="formData.prenom" placeholder="Prénom" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'USER_MANAGEMENT.LASTNAME' | translate }}</mat-label>
+      <input matInput [(ngModel)]="formData.nom" placeholder="Nom" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'USER_MANAGEMENT.EMAIL' | translate }}</mat-label>
+      <input matInput [(ngModel)]="formData.email" type="email" placeholder="Email" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'USER_MANAGEMENT.ROLE' | translate }}</mat-label>
+      <mat-select [(ngModel)]="formData.role">
+        @for (role of roles; track role) {
+          <mat-option [value]="role">{{ 'ROLES.' + role | translate }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'USER_MANAGEMENT.PHONE' | translate }}</mat-label>
+      <input matInput [(ngModel)]="formData.telephone" type="tel" placeholder="Téléphone">
+    </mat-form-field>
+
+    @if (isFieldVisible('service')) {
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'USER_MANAGEMENT.SERVICE' | translate }}</mat-label>
+        <input matInput [(ngModel)]="formData.service" placeholder="Service">
+      </mat-form-field>
+    }
+
+    @if (isFieldVisible('poste')) {
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'USER_MANAGEMENT.POSITION' | translate }}</mat-label>
+        <input matInput [(ngModel)]="formData.poste" placeholder="Poste">
+      </mat-form-field>
+    }
+
+    @if (isFieldVisible('etablissement')) {
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'USER_MANAGEMENT.ESTABLISHMENT' | translate }}</mat-label>
+        <input matInput [(ngModel)]="formData.etablissement" placeholder="Établissement">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'USER_MANAGEMENT.LEVEL' | translate }}</mat-label>
+        <input matInput [(ngModel)]="formData.niveauEtude" placeholder="Niveau d'étude">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'USER_MANAGEMENT.PROGRAM' | translate }}</mat-label>
+        <input matInput [(ngModel)]="formData.filiere" placeholder="Filière">
+      </mat-form-field>
+    }
+
+    @if (error) {
+      <div class="error-message">
+        <span>{{ error }}</span>
+      </div>
+    }
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button (click)="cancel()">{{ 'COMMON.CANCEL' | translate }}</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="loading">
+    @if (loading) {
+      <mat-spinner diameter="20"></mat-spinner>
+    } @else {
+      {{ 'COMMON.SAVE' | translate }}
+    }
+  </button>
+</mat-dialog-actions>

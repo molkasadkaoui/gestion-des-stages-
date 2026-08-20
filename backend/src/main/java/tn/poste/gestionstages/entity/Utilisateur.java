@@ -34,15 +34,29 @@ public class Utilisateur {
     private String motDePasse;
 
     @Enumerated(EnumType.STRING)
-    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(nullable = false)
     private Role role;
 
     @Column(nullable = false)
     private Boolean actif = true;
 
+    @Column(nullable = false)
+    private Boolean approuve = false;
+
     @Column(name = "date_creation", updatable = false)
     private LocalDateTime dateCreation;
+
+    @Column(name = "date_approbation")
+    private LocalDateTime dateApprobation;
+
+    @Column(nullable = false)
+    private Boolean emailVerifie = false;
+
+    @Column(name = "token_verification")
+    private String tokenVerification;
+
+    @Column(name = "date_verification")
+    private LocalDateTime dateVerification;
 
     @PrePersist
     protected void onCreate() {

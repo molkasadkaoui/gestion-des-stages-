@@ -9,6 +9,7 @@
       @if (checkingAffectation) {
         <div class="loading-center">
           <mat-spinner diameter="36"></mat-spinner>
+          <p>Chargement de votre affectation...</p>
         </div>
       }
 
@@ -16,27 +17,39 @@
         <p class="error">{{ 'RAPPORT_FORM.NO_AFFECTATION' | translate }}</p>
       }
 
-      @if (!checkingAffectation && affectation) {
+      @if (!checkingAffectation && affectation && affectation.stageTitre) {
         <div class="affectation-info">
           <p><strong>{{ 'RAPPORT_FORM.STAGE' | translate }} :</strong> {{ affectation.stageTitre }}</p>
           <p><strong>{{ 'RAPPORT_FORM.ENCADRANT' | translate }} :</strong> {{ affectation.encadrantNom }}</p>
         </div>
 
         <form (ngSubmit)="onSubmit()" #rf="ngForm">
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>{{ 'RAPPORT_FORM.FICHIER_URL' | translate }}</mat-label>
-            <input matInput name="fichierUrl" [(ngModel)]="request.fichierUrl" required>
-          </mat-form-field>
+
+          <!-- Zone de sélection de fichier depuis l'ordinateur -->
+          <div class="file-upload-box" (click)="fileInput.click()">
+            <input #fileInput type="file" (change)="onFileSelected($event)" accept=".pdf,.doc,.docx" style="display: none">
+            <mat-icon class="upload-icon">cloud_upload</mat-icon>
+            <div class="upload-text">
+              @if (!selectedFile) {
+                <p><strong>Déposer un fichier depuis votre ordinateur</strong></p>
+                <span class="file-hint">Formats acceptés : PDF, DOC, DOCX (Cliquez pour choisir un fichier)</span>
+              } @else {
+                <p class="file-name"><mat-icon>insert_drive_file</mat-icon> {{ selectedFile.name }}</p>
+                <span class="file-size">({{ (selectedFile.size / 1024 / 1024) | number:'1.1-2' }} Mo) - Cliquez pour modifier</span>
+              }
+            </div>
+          </div>
 
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>{{ 'RAPPORT_FORM.COMMENTAIRE' | translate }}</mat-label>
-            <textarea matInput name="commentaire" [(ngModel)]="request.commentaire" rows="3"></textarea>
+            <textarea matInput name="commentaire" [(ngModel)]="request.commentaire" rows="3" placeholder="Ajouter une remarque ou description optionnelle..."></textarea>
           </mat-form-field>
 
-          @if (error) { <p class="error">{{ error | translate }}</p> }
-          @if (success) { <p class="success">{{ success | translate }}</p> }
+          @if (error) { <p class="error">{{ error }}</p> }
+          @if (success) { <p class="success">{{ success }}</p> }
 
-          <button mat-raised-button color="primary" type="submit" [disabled]="!rf.valid || loading" class="full-width">
+          <button mat-raised-button color="primary" type="submit" [disabled]="(!selectedFile && !request.fichierUrl) || loading" class="full-width">
+            <mat-icon *ngIf="!loading">send</mat-icon>
             {{ (loading ? 'RAPPORT_FORM.SUBMITTING' : 'RAPPORT_FORM.SUBMIT') | translate }}
           </button>
         </form>

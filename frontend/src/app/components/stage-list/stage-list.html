@@ -1,72 +1,147 @@
-<div class="stage-list-container">
-  <div class="header-row">
-    <h1>{{ 'STAGES.TITLE' | translate }}</h1>
+<div class="page-container">
+
+  <!-- En-tête de page -->
+  <div class="page-header">
+    <div class="page-header-left">
+      <h1 class="page-title">{{ 'STAGES.TITLE' | translate }}</h1>
+      <span class="stages-count" *ngIf="!loading">{{ filteredStages.length }} stage(s)</span>
+    </div>
     @if (isAdmin) {
-      <a mat-raised-button color="primary" routerLink="/stages/nouveau">+ {{ 'STAGES.NEW_STAGE' | translate }}</a>
+      <a mat-raised-button color="primary" routerLink="/stages/nouveau" class="new-btn">
+        <mat-icon>add</mat-icon>
+        {{ 'STAGES.NEW_STAGE' | translate }}
+      </a>
     }
   </div>
 
-  @if (loading) {
-    <mat-spinner></mat-spinner>
-  }
-
-  @if (error) {
-    <p class="error">{{ error }}</p>
-  }
-
+  <!-- Barre de recherche & filtre -->
   @if (!loading && !error) {
-    <table mat-table [dataSource]="stages" class="mat-elevation-z2">
+    <div class="filters-bar">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Rechercher un stage...</mat-label>
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput [(ngModel)]="searchText" placeholder="Titre, service...">
+        @if (searchText) {
+          <button matSuffix mat-icon-button (click)="searchText = ''">
+            <mat-icon>close</mat-icon>
+          </button>
+        }
+      </mat-form-field>
 
-      <ng-container matColumnDef="titre">
-        <th mat-header-cell *matHeaderCellDef>{{ 'STAGES.TITRE' | translate }}</th>
-        <td mat-cell *matCellDef="let stage">{{ stage.titre }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="service">
-        <th mat-header-cell *matHeaderCellDef>{{ 'STAGES.SERVICE' | translate }}</th>
-        <td mat-cell *matCellDef="let stage">{{ stage.service }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="typeStage">
-        <th mat-header-cell *matHeaderCellDef>{{ 'STAGES.TYPE' | translate }}</th>
-        <td mat-cell *matCellDef="let stage">{{ typeKey(stage.typeStage) | translate }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="statut">
-        <th mat-header-cell *matHeaderCellDef>{{ 'STAGES.STATUT' | translate }}</th>
-        <td mat-cell *matCellDef="let stage">
-          <mat-chip [color]="stage.statut === 'OUVERT' ? 'primary' : 'warn'">
-            {{ statutKey(stage.statut) | translate }}
-          </mat-chip>
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="nbPlaces">
-        <th mat-header-cell *matHeaderCellDef>{{ 'STAGES.PLACES' | translate }}</th>
-        <td mat-cell *matCellDef="let stage">{{ stage.nbPlaces }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="dateDebut">
-        <th mat-header-cell *matHeaderCellDef>{{ 'STAGES.DEBUT' | translate }}</th>
-        <td mat-cell *matCellDef="let stage">{{ stage.dateDebut }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="dateFin">
-        <th mat-header-cell *matHeaderCellDef>{{ 'STAGES.FIN' | translate }}</th>
-        <td mat-cell *matCellDef="let stage">{{ stage.dateFin }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>{{ 'STAGES.ACTION' | translate }}</th>
-        <td mat-cell *matCellDef="let stage">
-          @if (isStagiaire && stage.statut === 'OUVERT') {
-            <button mat-button color="primary" (click)="postuler(stage)">{{ 'STAGES.POSTULER' | translate }}</button>
-          }
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Type de stage</mat-label>
+        <mat-select [(ngModel)]="filterType">
+          <mat-option value="">Tous les types</mat-option>
+          <mat-option value="OBSERVATION">{{ 'STAGES.TYPE_OBSERVATION' | translate }}</mat-option>
+          <mat-option value="INITIATION">{{ 'STAGES.TYPE_INITIATION' | translate }}</mat-option>
+          <mat-option value="PFE">{{ 'STAGES.TYPE_PFE' | translate }}</mat-option>
+          <mat-option value="ETE">{{ 'STAGES.TYPE_ETE' | translate }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
   }
+
+  <!-- Loading -->
+  @if (loading) {
+    <div class="loading-center">
+      <mat-spinner diameter="48"></mat-spinner>
+      <p class="loading-text">Chargement des stages...</p>
+    </div>
+  }
+
+  <!-- Erreur -->
+  @if (error) {
+    <div class="error-banner">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ error }}</span>
+    </div>
+  }
+
+  <!-- Grille de cards -->
+  @if (!loading && !error) {
+    @if (filteredStages.length === 0) {
+      <div class="empty-state">
+        <mat-icon class="empty-icon">inbox</mat-icon>
+        <p class="empty-title">Aucun stage trouvé</p>
+        <p class="empty-sub">Essayez de modifier vos critères de recherche.</p>
+      </div>
+    } @else {
+      <div class="stages-grid">
+        @for (stage of filteredStages; track stage.id) {
+          <div class="stage-card" [class.stage-card--open]="stage.statut === 'OUVERT'" [class.stage-card--closed]="stage.statut !== 'OUVERT'">
+
+            <div class="stage-card-header">
+              <span class="stage-type-badge">{{ typeKey(stage.typeStage) | translate }}</span>
+              <span class="stage-status-badge" [class.status-open]="stage.statut === 'OUVERT'" [class.status-closed]="stage.statut !== 'OUVERT'">
+                <span class="status-dot"></span>
+                {{ statutKey(stage.statut) | translate }}
+              </span>
+            </div>
+
+            <h3 class="stage-title">{{ stage.titre }}</h3>
+
+            <div class="stage-meta">
+              <div class="meta-item">
+                <mat-icon class="meta-icon">business</mat-icon>
+                <span>{{ stage.service }}</span>
+              </div>
+              <div class="meta-item">
+                <mat-icon class="meta-icon">people</mat-icon>
+                <span>{{ stage.nbPlaces }} place(s)</span>
+              </div>
+              <div class="meta-item">
+                <mat-icon class="meta-icon">calendar_today</mat-icon>
+                <span>{{ stage.dateDebut | date:'dd/MM/yyyy' }} → {{ stage.dateFin | date:'dd/MM/yyyy' }}</span>
+              </div>
+            </div>
+
+            @if (isStagiaire && stage.statut === 'OUVERT') {
+              <button 
+                mat-raised-button 
+                color="primary" 
+                class="postuler-btn" 
+                (click)="ouvrirFormulaireCandidature(stage)"
+                [disabled]="!canPostuler(stage)"
+                [matTooltip]="!canPostuler(stage) ? getPostulerDisabledReason(stage) : ''"
+                matTooltipPosition="above">
+                <mat-icon>send</mat-icon>
+                {{ 'STAGES.POSTULER' | translate }}
+              </button>
+            }
+
+            @if (isAdmin) {
+              <div class="admin-actions">
+                @if (stage.statut === 'OUVERT') {
+                  <button mat-stroked-button class="btn-fermer" (click)="fermer(stage)">
+                    <mat-icon>lock</mat-icon> Fermer
+                  </button>
+                  <button mat-stroked-button class="btn-annuler" (click)="annuler(stage)">
+                    <mat-icon>block</mat-icon> Annuler
+                  </button>
+                }
+                @if (stage.statut === 'FERME') {
+                  <button mat-stroked-button class="btn-rouvrir" (click)="rouvrir(stage)">
+                    <mat-icon>lock_open</mat-icon> Rouvrir
+                  </button>
+                }
+              </div>
+            }
+
+          </div>
+        }
+      </div>
+    }
+  }
+
+  <!-- Paginator -->
+  @if (!loading && !error && filteredStages.length > 0) {
+    <mat-paginator 
+      [length]="totalElements"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[5, 10, 25, 50]"
+      (page)="onPageChange($event)"
+      class="paginator">
+    </mat-paginator>
+  }
+
 </div>

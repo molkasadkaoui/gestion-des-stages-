@@ -3,6 +3,17 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Candidature, CandidatureRequest } from '../models/candidature.model';
 
+export interface PageResponse<T> {
+  content: T[];
+  number: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+  last: boolean;
+  first: boolean;
+  empty: boolean;
+}
+
 @Injectable({ providedIn: 'root' })
 export class CandidatureService {
   private apiUrl = 'http://localhost:8081/api/candidatures';
@@ -13,12 +24,12 @@ export class CandidatureService {
     return this.http.post<Candidature>(this.apiUrl, request);
   }
 
-  getAll(): Observable<Candidature[]> {
-    return this.http.get<Candidature[]>(this.apiUrl);
+  getAll(page = 0, size = 10): Observable<PageResponse<Candidature>> {
+    return this.http.get<PageResponse<Candidature>>(this.apiUrl, { params: { page, size } });
   }
 
-  getCandidaturesByStagiaire(stagiaireId: number): Observable<Candidature[]> {
-    return this.http.get<Candidature[]>(`${this.apiUrl}/stagiaire/${stagiaireId}`);
+  getCandidaturesByStagiaire(stagiaireId: number, page = 0, size = 10): Observable<PageResponse<Candidature>> {
+    return this.http.get<PageResponse<Candidature>>(`${this.apiUrl}/stagiaire/${stagiaireId}`, { params: { page, size } });
   }
 
   accepter(id: number): Observable<Candidature> {
@@ -27,5 +38,10 @@ export class CandidatureService {
 
   refuser(id: number): Observable<Candidature> {
     return this.http.patch<Candidature>(`${this.apiUrl}/${id}/refuser`, {});
+  }
+
+  // NOUVELLE FONCTIONNALITÉ : Annuler une candidature
+  annuler(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

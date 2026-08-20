@@ -1,0 +1,87 @@
+<div class="notifications-container">
+  <div class="notifications-header">
+    <h2 class="notifications-title">
+      <mat-icon>notifications</mat-icon>
+      {{ 'NOTIFICATIONS.TITLE' | translate }}
+    </h2>
+    @if (nonLues.length > 0) {
+      <button mat-stroked-button class="mark-all-btn" (click)="marquerToutCommeLu()">
+        {{ 'NOTIFICATIONS.MARK_ALL_READ' | translate }}
+      </button>
+    }
+  </div>
+
+  @if (loading) {
+    <div class="loading-center">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  }
+
+  @if (!loading && notifications.length === 0) {
+    <div class="empty-state">
+      <mat-icon class="empty-icon">inbox</mat-icon>
+      <p class="empty-text">{{ 'NOTIFICATIONS.EMPTY' | translate }}</p>
+    </div>
+  }
+
+  @if (!loading && notifications.length > 0) {
+    <mat-tab-group>
+      <!-- Onglet Non-Lues -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          {{ 'NOTIFICATIONS.UNREAD' | translate }}
+          @if (nonLues.length > 0) {
+            <span class="badge">{{ nonLues.length }}</span>
+          }
+        </ng-template>
+        <div class="notifications-list">
+          @if (nonLues.length === 0) {
+            <p class="empty-text">{{ 'NOTIFICATIONS.NO_UNREAD' | translate }}</p>
+          }
+          @for (notif of nonLues; track notif.id) {
+            <div class="notification-card unread">
+              <div class="notification-icon" [style.background-color]="obtenirCouleurType(notif.type)">
+                <mat-icon>{{ obtenirIconeType(notif.type) }}</mat-icon>
+              </div>
+              <div class="notification-content">
+                <h3 class="notification-titre">{{ notif.titre }}</h3>
+                <p class="notification-message">{{ notif.message }}</p>
+                <p class="notification-date">{{ notif.dateCreation | date: 'short' }}</p>
+              </div>
+              <button mat-icon-button (click)="marquerCommeLue(notif)" class="mark-btn">
+                <mat-icon>done</mat-icon>
+              </button>
+            </div>
+          }
+        </div>
+      </mat-tab>
+
+      <!-- Onglet Lues -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          {{ 'NOTIFICATIONS.READ' | translate }}
+          @if (lues.length > 0) {
+            <span class="badge-gray">{{ lues.length }}</span>
+          }
+        </ng-template>
+        <div class="notifications-list">
+          @if (lues.length === 0) {
+            <p class="empty-text">{{ 'NOTIFICATIONS.NO_READ' | translate }}</p>
+          }
+          @for (notif of lues; track notif.id) {
+            <div class="notification-card read">
+              <div class="notification-icon" [style.background-color]="obtenirCouleurType(notif.type)">
+                <mat-icon>{{ obtenirIconeType(notif.type) }}</mat-icon>
+              </div>
+              <div class="notification-content">
+                <h3 class="notification-titre">{{ notif.titre }}</h3>
+                <p class="notification-message">{{ notif.message }}</p>
+                <p class="notification-date">{{ notif.dateCreation | date: 'short' }}</p>
+              </div>
+            </div>
+          }
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  }
+</div>

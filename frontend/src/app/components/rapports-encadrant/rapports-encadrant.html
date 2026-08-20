@@ -1,0 +1,118 @@
+<div class="page-container">
+  <div class="page-header">
+    <h1 class="page-title">
+      <mat-icon>assignment</mat-icon>
+      {{ 'RAPPORTS.ENCADRANT_TITLE' | translate }}
+    </h1>
+  </div>
+
+  @if (loading) {
+    <div class="loading-center">
+      <mat-spinner diameter="48"></mat-spinner>
+      <p>{{ 'COMMON.LOADING' | translate }}</p>
+    </div>
+  }
+
+  @if (!loading && rapports.length === 0) {
+    <div class="empty-state">
+      <mat-icon class="empty-icon">assignment_turned_in</mat-icon>
+      <h2 class="empty-title">{{ 'RAPPORTS.NO_RAPPORTS' | translate }}</h2>
+      <p class="empty-sub">{{ 'RAPPORTS.NO_RAPPORTS_DESC' | translate }}</p>
+    </div>
+  }
+
+  @if (!loading && rapports.length > 0) {
+    <!-- Section Rapports En Attente -->
+    @if (rapportsEnAttente.length > 0) {
+      <div class="section">
+        <div class="section-header">
+          <mat-icon>hourglass_empty</mat-icon>
+          <h2 class="section-title">{{ 'RAPPORTS.PENDING' | translate }}</h2>
+          <span class="section-badge">{{ rapportsEnAttente.length }}</span>
+        </div>
+
+        <div class="rapports-list">
+          @for (rapport of rapportsEnAttente; track rapport.id) {
+            <div class="rapport-card">
+              <div class="rapport-header">
+                <div class="rapport-info">
+                  <h3 class="rapport-stagiaire">{{ rapport.stagiaireNom }}</h3>
+                  <p class="rapport-stage">{{ rapport.stageTitre }}</p>
+                </div>
+                <div class="rapport-statut">
+                  <span class="statut-badge" [style.background-color]="obtenirCouleurStatut(rapport.statut)">
+                    {{ ('RAPPORTS.STATUT_' + rapport.statut) | translate }}
+                  </span>
+                </div>
+              </div>
+
+              <div class="rapport-dates">
+                <p class="date-item">
+                  <mat-icon>calendar_today</mat-icon>
+                  <span>{{ rapport.dateSOumission | date: 'short' }}</span>
+                </p>
+              </div>
+
+              <div class="rapport-actions">
+                <button mat-raised-button class="btn-detail" (click)="verifierDetail(rapport)">
+                  <mat-icon>visibility</mat-icon>
+                  {{ 'RAPPORTS.VIEW' | translate }}
+                </button>
+                <button mat-raised-button class="btn-valider" (click)="validerRapport(rapport)">
+                  <mat-icon>check_circle</mat-icon>
+                  {{ 'RAPPORTS.VALIDER' | translate }}
+                </button>
+                <button mat-stroked-button class="btn-rejeter" (click)="rejeterRapport(rapport)">
+                  <mat-icon>cancel</mat-icon>
+                  {{ 'RAPPORTS.REJETER' | translate }}
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- Section Rapports Traités -->
+    @if (rapportsTraites.length > 0) {
+      <div class="section">
+        <div class="section-header">
+          <mat-icon>done_all</mat-icon>
+          <h2 class="section-title">{{ 'RAPPORTS.TREATED' | translate }}</h2>
+          <span class="section-badge">{{ rapportsTraites.length }}</span>
+        </div>
+
+        <div class="rapports-list">
+          @for (rapport of rapportsTraites; track rapport.id) {
+            <div class="rapport-card treated">
+              <div class="rapport-header">
+                <div class="rapport-info">
+                  <h3 class="rapport-stagiaire">{{ rapport.stagiaireNom }}</h3>
+                  <p class="rapport-stage">{{ rapport.stageTitre }}</p>
+                </div>
+                <div class="rapport-statut">
+                  <span class="statut-badge" [style.background-color]="obtenirCouleurStatut(rapport.statut)">
+                    {{ ('RAPPORTS.STATUT_' + rapport.statut) | translate }}
+                  </span>
+                </div>
+              </div>
+
+              <div class="rapport-dates">
+                <p class="date-item">
+                  <mat-icon>calendar_today</mat-icon>
+                  <span>{{ rapport.dateSOumission | date: 'short' }}</span>
+                </p>
+                @if (rapport.dateValidation) {
+                  <p class="date-item">
+                    <mat-icon>done</mat-icon>
+                    <span>{{ rapport.dateValidation | date: 'short' }}</span>
+                  </p>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  }
+</div>

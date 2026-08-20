@@ -11,7 +11,11 @@ import tn.poste.gestionstages.enums.StatutCandidature;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "candidatures")
+@Table(name = "candidatures", 
+       uniqueConstraints = @UniqueConstraint(
+           columnNames = {"stagiaire_id", "stage_id"},
+           name = "uk_candidature_stagiaire_stage"
+       ))
 @Getter
 @Setter
 @NoArgsConstructor
@@ -33,7 +37,6 @@ public class Candidature {
     private LocalDateTime dateCandidature;
 
     @Enumerated(EnumType.STRING)
-    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(nullable = false)
     private StatutCandidature statut = StatutCandidature.EN_ATTENTE;
 

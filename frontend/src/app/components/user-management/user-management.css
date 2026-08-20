@@ -1,0 +1,180 @@
+.user-management-container {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.management-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 15px;
+}
+
+.management-header h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 500;
+  color: #333;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 20px;
+}
+
+.loading-container p {
+  font-size: 14px;
+  color: #666;
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
+  background-color: #ffebee;
+  border: 1px solid #ffcdd2;
+  border-radius: 4px;
+  color: #c62828;
+  margin-top: 20px;
+}
+
+.error-message mat-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+.error-message p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.no-data-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 15px;
+  color: #999;
+}
+
+.no-data-message mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: #ccc;
+}
+
+.no-data-message p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.users-table-card {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.users-table {
+  width: 100%;
+}
+
+.users-table th {
+  background-color: #f5f5f5;
+  font-weight: 500;
+  color: #333;
+  padding: 15px;
+  text-align: left;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.users-table td {
+  padding: 15px;
+  color: #333;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 13px;
+}
+
+.users-table tr:hover {
+  background-color: #fafafa;
+}
+
+.actions-cell {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+mat-chip {
+  height: 24px;
+  font-size: 12px;
+  padding: 0 8px;
+}
+
+mat-chip.active {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+mat-chip.inactive {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+mat-chip.approved {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+mat-chip.pending {
+  background-color: #fff3e0;
+  color: #f57c00;
+}
+
+.neutral-text {
+  color: #999;
+  font-size: 12px;
+}
+
+mat-paginator {
+  border-top: 1px solid #e0e0e0;
+}
+
+button[mat-icon-button] {
+  padding: 4px 8px;
+}
+
+@media (max-width: 768px) {
+  .management-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .management-header h1 {
+    font-size: 22px;
+  }
+
+  .users-table {
+    font-size: 12px;
+  }
+
+  .users-table th,
+  .users-table td {
+    padding: 10px;
+  }
+
+  .actions-cell {
+    flex-wrap: wrap;
+  }
+}

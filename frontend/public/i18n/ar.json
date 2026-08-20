@@ -4,9 +4,13 @@
     "STAGES": "التربصات",
     "MES_CANDIDATURES": "ترشحاتي",
     "MON_AFFECTATION": "تكليفي",
+    "MES_STAGES": "تربصاتي",
+    "MES_RAPPORTS": "تقاريري",
     "DEPOSER_RAPPORT": "إيداع تقرير",
     "CANDIDATURES": "الترشحات",
     "EVALUER": "تقييم",
+    "DASHBOARD": "لوحة القيادة",
+    "NOTIFICATIONS": "الإخطارات",
     "DECONNEXION": "تسجيل الخروج"
   },
   "HOME": {
@@ -66,7 +70,10 @@
     "TYPE_ETE": "صيفي",
     "STATUT_OUVERT": "مفتوح",
     "STATUT_FERME": "مغلق",
-    "STATUT_ANNULE": "ملغى"
+    "STATUT_ANNULE": "ملغى",
+    "FERMER": "إغلاق التربص",
+    "ANNULER": "إلغاء التربص",
+    "ROUVRIR": "إعادة فتح التربص"
   },
   "STAGE_FORM": {
     "TITLE": "إنشاء تربص جديد",
@@ -93,6 +100,8 @@
     "ACCEPTER": "قبول",
     "REFUSER": "رفض",
     "AFFECTER": "تعيين مؤطر",
+    "AFFECTEE": "مُعيّنة",
+    "VOIR_DETAILS": "عرض التفاصيل",
     "STATUT_EN_ATTENTE": "قيد الانتظار",
     "STATUT_ACCEPTEE": "مقبولة",
     "STATUT_REFUSEE": "مرفوضة",
@@ -100,7 +109,11 @@
     "SUCCESS_ACCEPTER": "تم قبول الترشح",
     "SUCCESS_REFUSER": "تم رفض الترشح",
     "SUCCESS_AFFECTER": "تم تعيين المؤطر بنجاح",
-    "ERROR_AFFECTER": "خطأ أثناء التعيين"
+    "ERROR_AFFECTER": "خطأ أثناء التعيين",
+    "CV_UPLOADED": "تم تحميل السيرة الذاتية",
+    "DOWNLOAD_CV": "تحميل السيرة الذاتية",
+    "NO_CV": "لم يتم تحميل أي سيرة ذاتية",
+    "NO_LETTRE": "لا توجد رسالة تحفيز"
   },
   "MES_CANDIDATURES": {
     "TITLE": "ترشحاتي",
@@ -139,7 +152,41 @@
     "SUCCESS": "تم حفظ التقييم بنجاح!",
     "ERROR": "خطأ أثناء التقييم"
   },
+  "RAPPORTS": {
+    "ENCADRANT_TITLE": "تقاريري",
+    "NO_RAPPORTS": "لا توجد تقارير",
+    "NO_RAPPORTS_DESC": "لم تقم بإيداع أي تقارير حتى الآن. ستظهر التقارير هنا بمجرد إيداعك لها.",
+    "PENDING": "قيد الانتظار",
+    "TREATED": "مُعالَجة",
+    "VIEW": "عرض التفاصيل",
+    "VALIDER": "الموافقة",
+    "REJETER": "الرفض",
+    "CONFIRM_VALIDER": "هل أنت متأكد من موافقتك على هذا التقرير؟",
+    "CONFIRM_REJETER": "هل أنت متأكد من رفضك لهذا التقرير؟",
+    "SUCCESS_VALIDER": "تم الموافقة على التقرير بنجاح",
+    "SUCCESS_REJETER": "تم رفض التقرير",
+    "ERROR_VALIDER": "خطأ أثناء الموافقة على التقرير",
+    "ERROR_REJETER": "خطأ أثناء رفض التقرير",
+    "STATUT_DEPOSE": "مُودع",
+    "STATUT_EN_REVISION": "قيد المراجعة",
+    "STATUT_VALIDE": "موافق عليه",
+    "STATUT_REJETE": "مرفوض"
+  },
+  "NOTIFICATIONS": {
+    "TITLE": "الإخطارات",
+    "MARK_ALL_READ": "وضع علامة الكل كمقروء",
+    "UNREAD": "غير مقروءة",
+    "READ": "مقروءة",
+    "EMPTY": "لا توجد إخطارات",
+    "NO_NOTIFICATIONS": "لا توجد إخطارات",
+    "NO_UNREAD": "لا توجد إخطارات غير مقروءة",
+    "NO_READ": "لا توجد إخطارات مقروءة",
+    "TYPE_CANDIDATURE": "ترشح",
+    "TYPE_AFFECTATION": "تعيين",
+    "TYPE_RAPPORT": "تقرير"
+  },
   "COMMON": {
-    "LANGUAGE": "اللغة"
+    "LANGUAGE": "اللغة",
+    "CLOSE": "إغلاق"
   }
 }

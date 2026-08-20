@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet, RouterLink, Router, NavigationEnd } from '@angular/router';
+import { RouterOutlet, RouterLink, RouterLinkActive, Router, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,7 +11,7 @@ import { LanguageService } from './services/language';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, CommonModule, MatButtonModule, MatIconModule, TranslatePipe],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, CommonModule, MatButtonModule, MatIconModule, TranslatePipe],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

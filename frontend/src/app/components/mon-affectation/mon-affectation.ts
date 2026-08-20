@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Affectation } from '../../models/affectation.model';
@@ -10,7 +11,7 @@ import { AuthService } from '../../services/auth';
 @Component({
   selector: 'app-mon-affectation',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatProgressSpinnerModule, TranslatePipe],
+  imports: [CommonModule, MatCardModule, MatIconModule, MatProgressSpinnerModule, TranslatePipe],
   templateUrl: './mon-affectation.html',
   styleUrl: './mon-affectation.css'
 })
@@ -31,9 +32,9 @@ export class MonAffectation implements OnInit {
       return;
     }
 
-    this.affectationService.getByStagiaire(user.profilId).subscribe({
+    this.affectationService.getByStagiaire(user.profilId, 0, 100).subscribe({
       next: (data) => {
-        this.affectations = data;
+        this.affectations = data.content;
         this.loading = false;
         this.cdr.detectChanges();
       },

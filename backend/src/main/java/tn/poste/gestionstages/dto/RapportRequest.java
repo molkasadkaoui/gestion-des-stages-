@@ -8,11 +8,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RapportRequest {
-
-    @NotNull(message = "L'identifiant de l'affectation est obligatoire")
+    @NotNull(message = "L'ID de l'affectation est requis")
     private Long affectationId;
 
-    @NotBlank(message = "L'URL du fichier est obligatoire")
+    @NotBlank(message = "L'URL du fichier est requise")
     private String fichierUrl;
 
     private String commentaire;

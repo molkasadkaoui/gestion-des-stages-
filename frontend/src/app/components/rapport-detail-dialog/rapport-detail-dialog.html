@@ -1,0 +1,101 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <h2 class="dialog-title">
+      <mat-icon>description</mat-icon>
+      Détails du rapport
+    </h2>
+  </div>
+
+  <mat-tab-group>
+    <!-- Onglet Informations -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>info</mat-icon>
+        Informations
+      </ng-template>
+      
+      <div class="tab-content">
+        <div class="info-group">
+          <label class="info-label">Stagiaire</label>
+          <p class="info-value">{{ rapport.stagiaireNom }}</p>
+        </div>
+
+        <div class="info-group">
+          <label class="info-label">Stage</label>
+          <p class="info-value">{{ rapport.stageTitre }}</p>
+        </div>
+
+        <div class="info-group">
+          <label class="info-label">Statut</label>
+          <p class="info-value">
+            <span class="statut-badge" [class]="'statut-' + rapport.statut">
+              {{ ('RAPPORTS.STATUT_' + rapport.statut) | translate }}
+            </span>
+          </p>
+        </div>
+
+        <div class="info-group">
+          <label class="info-label">Date de soumission</label>
+          <p class="info-value">{{ rapport.dateSOumission | date: 'full' }}</p>
+        </div>
+
+        @if (rapport.dateValidation) {
+          <div class="info-group">
+            <label class="info-label">Date de validation</label>
+            <p class="info-value">{{ rapport.dateValidation | date: 'full' }}</p>
+          </div>
+        }
+      </div>
+    </mat-tab>
+
+    <!-- Onglet Fichier -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>file_download</mat-icon>
+        Fichier
+      </ng-template>
+
+      <div class="tab-content">
+        @if (rapport.fichierUrl) {
+          <div class="file-container">
+            <div class="file-icon">
+              <mat-icon>description</mat-icon>
+            </div>
+            <div class="file-info">
+              <p class="file-name">{{ obtenirNomFichier() }}</p>
+              <p class="file-desc">Fichier du rapport</p>
+            </div>
+            <button mat-raised-button class="btn-download" (click)="telechargerRapport()">
+              <mat-icon>download</mat-icon>
+              Télécharger
+            </button>
+          </div>
+        } @else {
+          <p class="empty-message">Aucun fichier associé</p>
+        }
+      </div>
+    </mat-tab>
+
+    <!-- Onglet Commentaire -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>comment</mat-icon>
+        Commentaire
+      </ng-template>
+
+      <div class="tab-content">
+        @if (rapport.commentaire) {
+          <div class="comment-box">
+            {{ rapport.commentaire }}
+          </div>
+        } @else {
+          <p class="empty-message">Aucun commentaire fourni</p>
+        }
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+
+  <div class="dialog-footer">
+    <button mat-stroked-button mat-dialog-close>Fermer</button>
+  </div>
+</div>

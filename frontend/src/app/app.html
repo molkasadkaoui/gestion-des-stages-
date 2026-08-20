@@ -7,27 +7,66 @@
 
     <nav class="app-nav">
       @if (currentUser) {
-        <a routerLink="/stages" class="nav-link">{{ 'NAV.STAGES' | translate }}</a>
+        <a routerLink="/stages" routerLinkActive="nav-link-active" class="nav-link">
+          <mat-icon class="nav-icon">work_outline</mat-icon>
+          {{ 'NAV.STAGES' | translate }}
+        </a>
 
         @if (currentUser.role === 'STAGIAIRE') {
-          <a routerLink="/mes-candidatures" class="nav-link">{{ 'NAV.MES_CANDIDATURES' | translate }}</a>
-          <a routerLink="/mon-affectation" class="nav-link">{{ 'NAV.MON_AFFECTATION' | translate }}</a>
-          <a routerLink="/rapports/nouveau" class="nav-link">{{ 'NAV.DEPOSER_RAPPORT' | translate }}</a>
+          <a routerLink="/mes-candidatures" routerLinkActive="nav-link-active" class="nav-link">
+            <mat-icon class="nav-icon">assignment</mat-icon>
+            {{ 'NAV.MES_CANDIDATURES' | translate }}
+          </a>
+          <a routerLink="/mon-affectation" routerLinkActive="nav-link-active" class="nav-link">
+            <mat-icon class="nav-icon">person_pin</mat-icon>
+            {{ 'NAV.MON_AFFECTATION' | translate }}
+          </a>
+          <a routerLink="/rapports/nouveau" routerLinkActive="nav-link-active" class="nav-link">
+            <mat-icon class="nav-icon">upload_file</mat-icon>
+            {{ 'NAV.DEPOSER_RAPPORT' | translate }}
+          </a>
         }
 
         @if (currentUser.role === 'ADMIN') {
-          <a routerLink="/candidatures" class="nav-link">{{ 'NAV.CANDIDATURES' | translate }}</a>
+          <a routerLink="/dashboard" routerLinkActive="nav-link-active" class="nav-link">
+            <mat-icon class="nav-icon">dashboard</mat-icon>
+            Tableau de bord
+          </a>
+          <a routerLink="/utilisateurs" routerLinkActive="nav-link-active" class="nav-link">
+            <mat-icon class="nav-icon">people</mat-icon>
+            {{ 'USER_MANAGEMENT.TITLE' | translate }}
+          </a>
+          <a routerLink="/candidatures" routerLinkActive="nav-link-active" class="nav-link">
+            <mat-icon class="nav-icon">group</mat-icon>
+            {{ 'NAV.CANDIDATURES' | translate }}
+          </a>
         }
 
         @if (currentUser.role === 'ENCADRANT') {
-          <a routerLink="/evaluations/nouveau" class="nav-link">{{ 'NAV.EVALUER' | translate }}</a>
+          <a routerLink="/mes-stages" routerLinkActive="nav-link-active" class="nav-link">
+            <mat-icon class="nav-icon">assignment_ind</mat-icon>
+            {{ 'NAV.MES_STAGES' | translate }}
+          </a>
+          <a routerLink="/mes-rapports" routerLinkActive="nav-link-active" class="nav-link">
+            <mat-icon class="nav-icon">description</mat-icon>
+            {{ 'NAV.MES_RAPPORTS' | translate }}
+          </a>
         }
 
-        <span class="user-info">{{ currentUser.prenom }} ({{ currentUser.role }})</span>
+        <a routerLink="/notifications" routerLinkActive="nav-link-active" class="nav-link">
+          <mat-icon class="nav-icon">notifications</mat-icon>
+          {{ 'NAV.NOTIFICATIONS' | translate }}
+        </a>
+
+        <div class="user-chip">
+          <mat-icon class="user-chip-icon">account_circle</mat-icon>
+          <span class="user-chip-name">{{ currentUser.prenom }}</span>
+          <span class="user-chip-role">{{ currentUser.role }}</span>
+        </div>
       }
 
       <button mat-stroked-button class="lang-btn" (click)="toggleLanguage()">
-        {{ languageService.currentLang === 'fr' ? 'العربية' : 'Français' }}
+        {{ languageService.currentLang === 'fr' ? 'ع' : 'FR' }}
       </button>
 
       @if (currentUser) {
@@ -40,4 +79,6 @@
   </header>
 }
 
-<router-outlet></router-outlet>
+<main class="app-main">
+  <router-outlet></router-outlet>
+</main>

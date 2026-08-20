@@ -1,28 +1,20 @@
 @use '@angular/material' as mat;
+@use './styles_theme-colors' as my-theme;
 
 html {
   height: 100%;
-  @include mat.theme(
-      (
-        color: (
-          theme-type: light,
-          primary: mat.$violet-palette,
-          tertiary: mat.$orange-palette,
-        ),
-        typography: Roboto,
-        density: 0,
-      )
-  );
-
-  // Surcharge des couleurs principales avec la charte La Poste Tunisienne
-  --mat-sys-primary: #1B1F5C;
-  --mat-sys-on-primary: #FFFFFF;
-  --mat-sys-secondary: #F5A623;
-  --mat-sys-on-secondary: #1B1F5C;
+  color-scheme: light;
+  @include mat.theme((
+    color: (
+      primary: my-theme.$primary-palette,
+      tertiary: my-theme.$tertiary-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
 }
 
 body {
-  color-scheme: light;
   background-color: var(--mat-sys-surface);
   color: var(--mat-sys-on-surface);
   font: var(--mat-sys-body-medium);

@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface StagiaireRepository extends JpaRepository<Stagiaire, Long> {
     Optional<Stagiaire> findByUtilisateurId(Long utilisateurId);
+    void deleteByUtilisateurId(Long utilisateurId);
 }

@@ -34,16 +34,16 @@
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>{{ 'STAGE_FORM.DATE_DEBUT' | translate }}</mat-label>
-          <input matInput [matDatepicker]="pickerDebut" name="dateDebut" [(ngModel)]="dateDebutModel" required>
+          <input matInput [matDatepicker]="pickerDebut" name="dateDebut" [(ngModel)]="dateDebutModel" [min]="minDate" required>
           <mat-datepicker-toggle matSuffix [for]="pickerDebut"></mat-datepicker-toggle>
-          <mat-datepicker #pickerDebut></mat-datepicker>
+          <mat-datepicker #pickerDebut [startAt]="minDate"></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>{{ 'STAGE_FORM.DATE_FIN' | translate }}</mat-label>
-          <input matInput [matDatepicker]="pickerFin" name="dateFin" [(ngModel)]="dateFinModel" required>
+          <input matInput [matDatepicker]="pickerFin" name="dateFin" [(ngModel)]="dateFinModel" [min]="minDate" required>
           <mat-datepicker-toggle matSuffix [for]="pickerFin"></mat-datepicker-toggle>
-          <mat-datepicker #pickerFin></mat-datepicker>
+          <mat-datepicker #pickerFin [startAt]="minDate"></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">

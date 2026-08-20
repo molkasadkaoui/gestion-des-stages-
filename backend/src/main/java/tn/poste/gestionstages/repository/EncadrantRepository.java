@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface EncadrantRepository extends JpaRepository<Encadrant, Long> {
     Optional<Encadrant> findByUtilisateurId(Long utilisateurId);
+    void deleteByUtilisateurId(Long utilisateurId);
 }

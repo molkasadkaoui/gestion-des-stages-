@@ -39,12 +39,10 @@ public class Stage {
     private LocalDate dateFin;
 
     @Enumerated(EnumType.STRING)
-    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(name = "type_stage", nullable = false)
     private TypeStage typeStage;
 
     @Enumerated(EnumType.STRING)
-    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(nullable = false)
     private StatutStage statut = StatutStage.OUVERT;
 

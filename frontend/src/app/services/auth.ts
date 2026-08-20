@@ -19,7 +19,12 @@ export class AuthService {
 
   register(request: RegisterRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/register`, request).pipe(
-      tap(response => this.setSession(response))
+      tap(response => {
+        // Ne sauvegarder que si il y a un token (pour les encadrants non approuvés, token sera null)
+        if (response.token) {
+          this.setSession(response);
+        }
+      })
     );
   }
 

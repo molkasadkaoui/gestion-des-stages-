@@ -1,28 +1,62 @@
-<div class="container">
-  <h1>{{ 'MON_AFFECTATION.TITLE' | translate }}</h1>
+<div class="page-container">
+
+  <div class="page-header">
+    <mat-icon class="page-icon">person_pin</mat-icon>
+    <h1 class="page-title">{{ 'MON_AFFECTATION.TITLE' | translate }}</h1>
+  </div>
 
   @if (loading) {
-    <mat-spinner></mat-spinner>
+    <div class="loading-center">
+      <mat-spinner diameter="48"></mat-spinner>
+    </div>
   }
 
   @if (!loading && affectations.length === 0) {
-    <p class="empty-message">{{ 'MON_AFFECTATION.EMPTY' | translate }}</p>
+    <div class="empty-state">
+      <mat-icon class="empty-icon">person_search</mat-icon>
+      <p class="empty-title">Pas encore d'affectation</p>
+      <p class="empty-sub">{{ 'MON_AFFECTATION.EMPTY' | translate }}</p>
+    </div>
   }
 
-  @for (a of affectations; track a.id) {
-    <mat-card class="affectation-card">
-      <mat-card-content>
-        <p class="label">{{ 'MON_AFFECTATION.STAGE' | translate }}</p>
-        <p class="value">{{ a.stageTitre }}</p>
+  @if (!loading && affectations.length > 0) {
+    <div class="affectations-grid">
+      @for (a of affectations; track a.id) {
+        <div class="affectation-card">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <div class="info-row">
+              <div class="info-item">
+                <mat-icon class="info-icon">work</mat-icon>
+                <div>
+                  <p class="info-label">{{ 'MON_AFFECTATION.STAGE' | translate }}</p>
+                  <p class="info-value">{{ a.stageTitre || a.stage?.titre || 'Non disponible' }}</p>
+                </div>
+              </div>
+              <div class="info-item">
+                <mat-icon class="info-icon">supervisor_account</mat-icon>
+                <div>
+                  <p class="info-label">{{ 'MON_AFFECTATION.ENCADRANT' | translate }}</p>
+                  <p class="info-value">{{ (a.encadrantPrenom || '') + ' ' + (a.encadrantNom || a.encadrant?.nom || 'Non disponible') }}</p>
+                </div>
+              </div>
+              <div class="info-item">
+                <mat-icon class="info-icon">event</mat-icon>
+                <div>
+                  <p class="info-label">{{ 'MON_AFFECTATION.DATE' | translate }}</p>
+                  <p class="info-value">{{ a.dateAffectation | date:'dd/MM/yyyy' }}</p>
+                </div>
+              </div>
+            </div>
 
-        <p class="label">{{ 'MON_AFFECTATION.ENCADRANT' | translate }}</p>
-        <p class="value">{{ a.encadrantNom }}</p>
-
-        <p class="label">{{ 'MON_AFFECTATION.DATE' | translate }}</p>
-        <p class="value">{{ a.dateAffectation | date:'dd/MM/yyyy' }}</p>
-
-        <p class="affectation-id">{{ 'MON_AFFECTATION.AFFECTATION_ID' | translate: { id: a.id } }}</p>
-      </mat-card-content>
-    </mat-card>
+            <div class="affectation-id-row">
+              <mat-icon class="id-icon">tag</mat-icon>
+              <span>{{ 'MON_AFFECTATION.AFFECTATION_ID' | translate: { id: a.id } }}</span>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
   }
+
 </div>

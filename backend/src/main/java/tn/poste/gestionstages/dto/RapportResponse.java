@@ -14,8 +14,10 @@ public class RapportResponse {
     private Long id;
     private Long affectationId;
     private String stagiaireNom;
+    private String stageTitre;
     private String fichierUrl;
-    private LocalDateTime dateDepot;
-    private StatutRapport statut;
     private String commentaire;
+    private StatutRapport statut;
+    private LocalDateTime datesoumission;
+    private LocalDateTime dateValidation;
 }

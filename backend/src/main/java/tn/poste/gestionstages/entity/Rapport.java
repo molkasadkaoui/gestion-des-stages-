@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 import tn.poste.gestionstages.enums.StatutRapport;
 
 import java.time.LocalDateTime;
@@ -21,26 +19,28 @@ public class Rapport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "affectation_id", nullable = false)
+    @OneToOne
+    @JoinColumn(name = "affectation_id", nullable = false, unique = true)
     private Affectation affectation;
 
     @Column(name = "fichier_url", nullable = false)
     private String fichierUrl;
 
-    @Column(name = "date_depot", updatable = false)
-    private LocalDateTime dateDepot;
-
-    @Enumerated(EnumType.STRING)
-    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
-    @Column(nullable = false)
-    private StatutRapport statut = StatutRapport.DEPOSE;
-
     @Column(columnDefinition = "TEXT")
     private String commentaire;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private StatutRapport statut = StatutRapport.EN_ATTENTE;
+
+    @Column(name = "date_soumission", updatable = false)
+    private LocalDateTime dateSOumission;
+
+    @Column(name = "date_validation")
+    private LocalDateTime dateValidation;
+
     @PrePersist
     protected void onCreate() {
-        this.dateDepot = LocalDateTime.now();
+        this.dateSOumission = LocalDateTime.now();
     }
 }

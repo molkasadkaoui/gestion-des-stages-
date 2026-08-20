@@ -1,8 +1,8 @@
 package tn.poste.gestionstages.enums;
 
 public enum StatutRapport {
-    DEPOSE,
-    EN_REVISION,
-    VALIDE,
-    REJETE
+    EN_ATTENTE,      // Pas encore de rapport
+    DEPOSE,          // Rapport déposé
+    VALIDE,          // Rapport validé
+    REJETE           // Rapport rejeté
 }

@@ -1,0 +1,80 @@
+<div class="mes-stages-container">
+  <div class="mes-stages-header">
+    <h1>{{ 'NAV.MES_STAGES' | translate }}</h1>
+    <p class="mes-stages-subtitle">{{ 'STAGES.STAGES_ASSIGNED_TO_ME' | translate }}</p>
+  </div>
+
+  @if (loading) {
+    <div class="loading-container">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>{{ 'COMMON.LOADING' | translate }}</p>
+    </div>
+  } @else if (error) {
+    <div class="error-message">
+      <mat-icon>error_outline</mat-icon>
+      <p>{{ error }}</p>
+    </div>
+  } @else if (stages.length === 0) {
+    <div class="no-data-message">
+      <mat-icon>info_outline</mat-icon>
+      <p>{{ 'STAGES.NO_STAGES' | translate }}</p>
+    </div>
+  } @else {
+    <div class="stages-grid">
+      @for (stage of stages; track stage.id) {
+        <mat-card class="stage-card">
+          <mat-card-header>
+            <mat-card-title>{{ stage.titre }}</mat-card-title>
+            <mat-card-subtitle>{{ stage.service }}</mat-card-subtitle>
+          </mat-card-header>
+
+          <mat-card-content>
+            <div class="stage-details">
+              <div class="detail-row">
+                <span class="detail-label">{{ 'STAGES.TYPE' | translate }}:</span>
+                <mat-chip class="detail-value">{{ typeKey(stage.typeStage) | translate }}</mat-chip>
+              </div>
+
+              <div class="detail-row">
+                <span class="detail-label">{{ 'STAGES.STATUS' | translate }}:</span>
+                <mat-chip class="detail-value" [class.status-ferme]="stage.statut === 'FERME'">
+                  {{ statutKey(stage.statut) | translate }}
+                </mat-chip>
+              </div>
+
+              <div class="detail-row">
+                <span class="detail-label">{{ 'STAGES.START_DATE' | translate }}:</span>
+                <span class="detail-value">{{ stage.dateDebut | date: 'dd/MM/yyyy' }}</span>
+              </div>
+
+              <div class="detail-row">
+                <span class="detail-label">{{ 'STAGES.END_DATE' | translate }}:</span>
+                <span class="detail-value">{{ stage.dateFin | date: 'dd/MM/yyyy' }}</span>
+              </div>
+
+              <div class="detail-row">
+                <span class="detail-label">{{ 'STAGES.PLACES' | translate }}:</span>
+                <span class="detail-value">{{ stage.nbPlaces }}</span>
+              </div>
+
+              @if (stage.description) {
+                <div class="detail-row full-width">
+                  <span class="detail-label">{{ 'STAGES.DESCRIPTION' | translate }}:</span>
+                  <p class="stage-description">{{ stage.description }}</p>
+                </div>
+              }
+            </div>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+
+    <mat-paginator
+      [length]="totalElements"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[5, 10, 25]"
+      (page)="onPageChange($event)"
+      showFirstLastButtons>
+    </mat-paginator>
+  }
+</div>

@@ -1,13 +1,181 @@
-.container {
-  padding: 24px;
-  max-width: 800px;
+.page-container {
+  max-width: 900px;
   margin: 0 auto;
+  padding: 32px 24px;
 }
-table {
-  width: 100%;
+
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
 }
-.empty-message {
-  color: #6b6b7a;
+
+.page-icon {
+  font-size: 32px !important;
+  height: 32px !important;
+  width: 32px !important;
+  color: #1B1F5C;
+}
+
+.page-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1B1F5C;
+  margin: 0;
+}
+
+.count-badge {
+  background: #EEF0FF;
+  color: #1B1F5C;
+  font-size: 13px;
+  font-weight: 700;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-center {
+  display: flex;
+  justify-content: center;
+  padding: 80px 0;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80px 0;
+  gap: 12px;
   text-align: center;
-  margin-top: 40px;
+}
+
+.empty-icon {
+  font-size: 64px !important;
+  height: 64px !important;
+  width: 64px !important;
+  color: #C9CBDE;
+}
+
+.empty-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #5A5E7A;
+  margin: 0;
+}
+
+.empty-sub {
+  font-size: 14px;
+  color: #9396AA;
+  margin: 0 0 8px;
+  max-width: 380px;
+  line-height: 1.6;
+}
+
+.candidatures-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.candidature-row {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 2px 8px rgba(27, 31, 92, 0.07);
+  border: 1px solid #E8EAF3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  transition: box-shadow 0.15s;
+}
+
+.candidature-row:hover {
+  box-shadow: 0 5px 16px rgba(27, 31, 92, 0.12);
+}
+
+.row-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+}
+
+.stage-icon-wrap {
+  width: 40px;
+  height: 40px;
+  background: #EEF0FF;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stage-icon {
+  font-size: 20px !important;
+  height: 20px !important;
+  width: 20px !important;
+  color: #1B1F5C;
+}
+
+.stage-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1B1F5C;
+  margin: 0 0 3px;
+}
+
+.stage-date {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: #9396AA;
+  margin: 0;
+}
+
+.date-icon {
+  font-size: 12px !important;
+  height: 12px !important;
+  width: 12px !important;
+}
+
+.status-chip {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.chip-icon {
+  font-size: 14px !important;
+  height: 14px !important;
+  width: 14px !important;
+}
+
+.status-attente {
+  background: #FFF7E0;
+  color: #92610A;
+}
+
+.status-acceptee {
+  background: #DCFCE7;
+  color: #166534;
+}
+
+.status-refusee {
+  background: #FEE2E2;
+  color: #991B1B;
 }

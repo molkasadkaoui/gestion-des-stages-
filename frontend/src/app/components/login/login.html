@@ -1,26 +1,42 @@
 <div class="auth-container">
   <mat-card class="auth-card">
+    <div class="auth-logo-wrap">
+      <img src="/logo-poste.webp" alt="La Poste Tunisienne" class="auth-logo">
+    </div>
+
     <mat-card-header>
       <mat-card-title>{{ 'LOGIN.TITLE' | translate }}</mat-card-title>
+      <mat-card-subtitle>{{ 'HOME.SUBTITLE' | translate }}</mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content>
       <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>{{ 'LOGIN.EMAIL' | translate }}</mat-label>
-          <input matInput type="email" name="email" [(ngModel)]="credentials.email" required>
+          <mat-icon matPrefix class="field-icon">email</mat-icon>
+          <input matInput type="email" name="email" [(ngModel)]="credentials.email" required autocomplete="email">
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>{{ 'LOGIN.PASSWORD' | translate }}</mat-label>
-          <input matInput type="password" name="motDePasse" [(ngModel)]="credentials.motDePasse" required>
+          <mat-icon matPrefix class="field-icon">lock</mat-icon>
+          <input matInput [type]="showPassword ? 'text' : 'password'" name="motDePasse" [(ngModel)]="credentials.motDePasse" required autocomplete="current-password">
+          <button type="button" mat-icon-button matSuffix (click)="showPassword = !showPassword" [attr.aria-label]="'Afficher le mot de passe'">
+            <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
         </mat-form-field>
 
         @if (error) {
-          <p class="error">{{ error | translate }}</p>
+          <div class="error-banner">
+            <mat-icon class="error-icon">error_outline</mat-icon>
+            <span>{{ error | translate }}</span>
+          </div>
         }
 
-        <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid || loading" class="full-width">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid || loading" class="full-width submit-btn">
+          @if (loading) {
+            <mat-spinner diameter="20" class="btn-spinner"></mat-spinner>
+          }
           {{ (loading ? 'LOGIN.SUBMITTING' : 'LOGIN.SUBMIT') | translate }}
         </button>
       </form>

@@ -1,5 +1,5 @@
 export interface CandidatureRequest {
-  stagiaireId: number;
+  // stagiaireId supprimé - il est récupéré du token JWT côté backend
   stageId: number;
   cvUrl?: string;
   lettreMotivation?: string;

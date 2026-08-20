@@ -1,52 +1,114 @@
-<div class="container">
-  <h1>{{ 'CANDIDATURES.TITLE' | translate }}</h1>
+<div class="page-container">
+
+  <div class="page-header">
+    <h1 class="page-title">{{ 'CANDIDATURES.TITLE' | translate }}</h1>
+    @if (!loading) {
+      <span class="count-badge">{{ candidatures.length }} candidature(s)</span>
+    }
+  </div>
+
+  <!-- Panel d'affectation inline -->
+  @if (affectationEnCours) {
+    <div class="affectation-panel">
+      <div class="panel-header">
+        <mat-icon>person_add</mat-icon>
+        <span>Affecter un encadrant à <strong>{{ affectationEnCours.stagiaireNom }}</strong></span>
+      </div>
+      <div class="panel-body">
+        <mat-form-field appearance="outline" class="encadrant-select">
+          <mat-label>Choisir un encadrant</mat-label>
+          <mat-select [(ngModel)]="encadrantSelectionne">
+            @for (e of encadrants; track e.id) {
+              <mat-option [value]="e.id">
+                {{ e.nom }} {{ e.prenom }} — {{ e.service }}
+                <span class="charge-badge" [class.charge-high]="e.nbStagiairesActuels >= 3">
+                  {{ e.nbStagiairesActuels }} stagiaire(s)
+                </span>
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <div class="panel-actions">
+          <button mat-raised-button color="primary" [disabled]="!encadrantSelectionne || affectationLoading" (click)="confirmerAffectation()">
+            @if (affectationLoading) { <mat-spinner diameter="18"></mat-spinner> }
+            Confirmer l'affectation
+          </button>
+          <button mat-stroked-button (click)="annulerAffectation()">Annuler</button>
+        </div>
+      </div>
+    </div>
+  }
 
   @if (loading) {
-    <mat-spinner></mat-spinner>
+    <div class="loading-center">
+      <mat-spinner diameter="48"></mat-spinner>
+    </div>
   }
 
   @if (!loading) {
-    <table mat-table [dataSource]="candidatures" class="mat-elevation-z2">
+    @if (candidatures.length === 0) {
+      <div class="empty-state">
+        <mat-icon class="empty-icon">assignment_turned_in</mat-icon>
+        <p class="empty-title">Aucune candidature</p>
+        <p class="empty-sub">Les candidatures apparaîtront ici dès que des stagiaires postuleront.</p>
+      </div>
+    } @else {
+      <div class="candidatures-list">
+        @for (c of candidatures; track c.id) {
+          <div class="candidature-card" [class.card-selected]="affectationEnCours?.id === c.id">
+            <div class="cand-left">
+              <div class="cand-avatar">{{ c.stagiaireNom?.charAt(0)?.toUpperCase() }}</div>
+              <div class="cand-info">
+                <p class="cand-name">{{ c.stagiaireNom }}</p>
+                <p class="cand-stage">{{ c.stageTitre }}</p>
+                <p class="cand-date">
+                  <mat-icon class="cand-meta-icon">calendar_today</mat-icon>
+                  {{ c.dateCandidature | date:'dd/MM/yyyy' }}
+                </p>
+              </div>
+            </div>
 
-      <ng-container matColumnDef="stagiaireNom">
-        <th mat-header-cell *matHeaderCellDef>{{ 'CANDIDATURES.STAGIAIRE' | translate }}</th>
-        <td mat-cell *matCellDef="let c">{{ c.stagiaireNom }}</td>
-      </ng-container>
+            <div class="cand-right">
+              <span class="status-chip"
+                [class.status-attente]="c.statut === 'EN_ATTENTE'"
+                [class.status-acceptee]="c.statut === 'ACCEPTEE'"
+                [class.status-refusee]="c.statut === 'REFUSEE'">
+                {{ statutKey(c.statut) | translate }}
+              </span>
 
-      <ng-container matColumnDef="stageTitre">
-        <th mat-header-cell *matHeaderCellDef>{{ 'CANDIDATURES.STAGE' | translate }}</th>
-        <td mat-cell *matCellDef="let c">{{ c.stageTitre }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="dateCandidature">
-        <th mat-header-cell *matHeaderCellDef>{{ 'CANDIDATURES.DATE' | translate }}</th>
-        <td mat-cell *matCellDef="let c">{{ c.dateCandidature | date:'dd/MM/yyyy' }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="statut">
-        <th mat-header-cell *matHeaderCellDef>{{ 'CANDIDATURES.STATUT' | translate }}</th>
-        <td mat-cell *matCellDef="let c">
-          <mat-chip [color]="c.statut === 'ACCEPTEE' ? 'primary' : c.statut === 'REFUSEE' ? 'warn' : undefined">
-            {{ statutKey(c.statut) | translate }}
-          </mat-chip>
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>{{ 'CANDIDATURES.ACTIONS' | translate }}</th>
-        <td mat-cell *matCellDef="let c">
-          @if (c.statut === 'EN_ATTENTE') {
-            <button mat-button color="primary" (click)="accepter(c)">{{ 'CANDIDATURES.ACCEPTER' | translate }}</button>
-            <button mat-button color="warn" (click)="refuser(c)">{{ 'CANDIDATURES.REFUSER' | translate }}</button>
-          }
-          @if (c.statut === 'ACCEPTEE') {
-            <button mat-button (click)="affecter(c)">{{ 'CANDIDATURES.AFFECTER' | translate }}</button>
-          }
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+              <div class="cand-actions">
+                @if (c.statut === 'EN_ATTENTE') {
+                  <button mat-raised-button class="btn-details" (click)="verifierDetails(c)">
+                    <mat-icon>info</mat-icon>
+                    {{ 'CANDIDATURES.VOIR_DETAILS' | translate }}
+                  </button>
+                  <button mat-raised-button class="btn-accept" (click)="accepter(c)">
+                    <mat-icon>check</mat-icon>
+                    {{ 'CANDIDATURES.ACCEPTER' | translate }}
+                  </button>
+                  <button mat-stroked-button class="btn-refuse" (click)="refuser(c)">
+                    <mat-icon>close</mat-icon>
+                    {{ 'CANDIDATURES.REFUSER' | translate }}
+                  </button>
+                }
+                @if (c.statut === 'ACCEPTEE' && !aUneAffectation(c)) {
+                  <button mat-raised-button class="btn-affecter" (click)="ouvrirAffectation(c)">
+                    <mat-icon>person_add</mat-icon>
+                    {{ 'CANDIDATURES.AFFECTER' | translate }}
+                  </button>
+                }
+                @if (c.statut === 'ACCEPTEE' && aUneAffectation(c)) {
+                  <div class="affectation-badge">
+                    <mat-icon>check_circle</mat-icon>
+                    {{ 'CANDIDATURES.AFFECTEE' | translate }}
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
   }
+
 </div>

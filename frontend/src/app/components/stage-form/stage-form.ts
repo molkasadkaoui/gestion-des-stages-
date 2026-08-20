@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -24,7 +24,7 @@ import { Stage } from '../../models/stage.model';
   templateUrl: './stage-form.html',
   styleUrl: './stage-form.css'
 })
-export class StageForm {
+export class StageForm implements OnInit {
   stage: Partial<Stage> = {
     titre: '',
     description: '',
@@ -36,12 +36,19 @@ export class StageForm {
   };
   dateDebutModel: Date | null = null;
   dateFinModel: Date | null = null;
+  minDate: Date = new Date(); // Date minimum : aujourd'hui
 
   error = '';
   success = '';
   loading = false;
 
   constructor(private stageService: StageService, private router: Router) {}
+
+  ngOnInit(): void {
+    // S'assurer que minDate est bien d'aujourd'hui
+    this.minDate = new Date();
+    this.minDate.setHours(0, 0, 0, 0);
+  }
 
   onSubmit(): void {
     this.error = '';

@@ -2,78 +2,152 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 28px;
-  background-color: #1B1F5C;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  padding: 0 28px;
+  height: 64px;
+  background: linear-gradient(90deg, #1B1F5C 0%, #252A7A 100%);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 8px;
 }
 
 .app-header-left {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
+  flex-shrink: 0;
 }
 
 .app-logo {
-  height: 38px;
+  height: 36px;
   width: auto;
   border-radius: 4px;
 }
 
 .app-title {
-  font-size: 19px;
+  font-size: 17px;
   font-weight: 700;
   color: #ffffff;
   letter-spacing: 0.3px;
+  white-space: nowrap;
 }
 
 .app-nav {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 4px;
   flex-wrap: wrap;
+  height: 100%;
 }
 
 .nav-link {
-  color: rgba(255, 255, 255, 0.85);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: rgba(255, 255, 255, 0.75);
   text-decoration: none;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
-  transition: color 0.15s;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  height: 36px;
 }
 
 .nav-link:hover {
-  color: #F5A623;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
 }
 
-.user-info {
-  color: rgba(255, 255, 255, 0.6);
+.nav-link-active {
+  color: #F5A623 !important;
+  background: rgba(245, 166, 35, 0.12) !important;
+  font-weight: 600 !important;
+}
+
+.nav-icon {
+  font-size: 16px !important;
+  height: 16px !important;
+  width: 16px !important;
+  opacity: 0.85;
+}
+
+.user-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 4px 12px 4px 8px;
+  margin-left: 8px;
+}
+
+.user-chip-icon {
+  font-size: 18px !important;
+  height: 18px !important;
+  width: 18px !important;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.user-chip-name {
+  color: #ffffff;
   font-size: 13px;
-  padding-left: 8px;
-  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  font-weight: 600;
+}
+
+.user-chip-role {
+  color: #F5A623;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: rgba(245, 166, 35, 0.15);
+  padding: 2px 7px;
+  border-radius: 10px;
 }
 
 .logout-btn {
-  color: #ffffff !important;
-  border-color: rgba(255, 255, 255, 0.4) !important;
-  height: 36px;
+  color: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+  height: 34px !important;
   font-size: 13px !important;
-  display: flex;
+  display: flex !important;
   align-items: center;
   gap: 4px;
+  transition: all 0.15s !important;
+}
+
+.logout-btn:hover {
+  border-color: rgba(255, 255, 255, 0.6) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
 }
 
 .logout-btn mat-icon {
-  font-size: 18px;
-  height: 18px;
-  width: 18px;
+  font-size: 16px !important;
+  height: 16px !important;
+  width: 16px !important;
 }
 
 .lang-btn {
-  color: #ffffff !important;
-  border-color: rgba(255, 255, 255, 0.4) !important;
-  height: 36px;
+  color: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+  height: 34px !important;
+  min-width: 38px !important;
   font-size: 13px !important;
-  font-weight: 600 !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px;
+}
+
+.lang-btn:hover {
+  border-color: rgba(255, 255, 255, 0.6) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.app-main {
+  min-height: calc(100vh - 64px);
+  background: #F4F5F9;
 }

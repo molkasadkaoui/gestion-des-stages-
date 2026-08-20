@@ -23,8 +23,15 @@ public class AuthService {
     private final EncadrantRepository encadrantRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
+    private final EmailVerificationService emailVerificationService;
+    private final EmailService emailService;
 
     public AuthResponse register(RegisterRequest request) {
+
+        // Valider l'email
+        if (!emailVerificationService.isEmailValid(request.getEmail())) {
+            throw new IllegalArgumentException("L'adresse email n'est pas valide.");
+        }
 
         if (utilisateurRepository.existsByEmail(request.getEmail())) {
             throw new IllegalArgumentException("Cet email est déjà utilisé.");
@@ -36,6 +43,17 @@ public class AuthService {
         utilisateur.setEmail(request.getEmail());
         utilisateur.setMotDePasse(passwordEncoder.encode(request.getMotDePasse()));
         utilisateur.setRole(request.getRole());
+        
+        // L'encadrant n'est pas approuvé par défaut
+        if (request.getRole() == Role.ENCADRANT) {
+            utilisateur.setApprouve(false);
+        } else {
+            utilisateur.setApprouve(true);
+        }
+
+        // Email est considéré valide automatiquement
+        utilisateur.setEmailVerifie(true);
+        
         utilisateur = utilisateurRepository.save(utilisateur);
 
         Long profilId = null;
@@ -60,7 +78,11 @@ public class AuthService {
             profilId = encadrant.getId();
         }
 
-        String token = jwtUtil.generateToken(utilisateur.getEmail(), utilisateur.getRole().name(), utilisateur.getId());
+        // Les encadrants non approuvés ne reçoivent pas de token
+        String token = null;
+        if (utilisateur.getRole() != Role.ENCADRANT || utilisateur.getApprouve()) {
+            token = jwtUtil.generateToken(utilisateur.getEmail(), utilisateur.getRole().name(), utilisateur.getId());
+        }
 
         return new AuthResponse(
                 utilisateur.getId(),
@@ -84,6 +106,11 @@ public class AuthService {
 
         if (!utilisateur.getActif()) {
             throw new IllegalStateException("Ce compte a été désactivé.");
+        }
+
+        // Vérifier que l'encadrant est approuvé
+        if (utilisateur.getRole() == Role.ENCADRANT && !utilisateur.getApprouve()) {
+            throw new IllegalStateException("Votre compte encadrant n'a pas encore été approuvé par l'administrateur. Veuillez réessayer plus tard.");
         }
 
         Long profilId = null;

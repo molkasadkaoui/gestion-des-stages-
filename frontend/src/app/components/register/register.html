@@ -1,33 +1,49 @@
 <div class="auth-container">
-  <mat-card class="auth-card">
+  <mat-card class="auth-card register-card">
+    <div class="auth-logo-wrap">
+      <img src="/logo-poste.webp" alt="La Poste Tunisienne" class="auth-logo">
+    </div>
+
     <mat-card-header>
       <mat-card-title>{{ 'REGISTER.TITLE' | translate }}</mat-card-title>
+      <mat-card-subtitle>{{ 'HOME.SUBTITLE' | translate }}</mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content>
       <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>{{ 'REGISTER.NOM' | translate }}</mat-label>
-          <input matInput name="nom" [(ngModel)]="request.nom" required>
-        </mat-form-field>
 
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>{{ 'REGISTER.PRENOM' | translate }}</mat-label>
-          <input matInput name="prenom" [(ngModel)]="request.prenom" required>
-        </mat-form-field>
+        <!-- Nom & Prénom côte à côte -->
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>{{ 'REGISTER.NOM' | translate }}</mat-label>
+            <mat-icon matPrefix class="field-icon">person</mat-icon>
+            <input matInput name="nom" [(ngModel)]="request.nom" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>{{ 'REGISTER.PRENOM' | translate }}</mat-label>
+            <input matInput name="prenom" [(ngModel)]="request.prenom" required>
+          </mat-form-field>
+        </div>
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>{{ 'REGISTER.EMAIL' | translate }}</mat-label>
-          <input matInput type="email" name="email" [(ngModel)]="request.email" required>
+          <mat-icon matPrefix class="field-icon">email</mat-icon>
+          <input matInput type="email" name="email" [(ngModel)]="request.email" required autocomplete="email">
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>{{ 'REGISTER.PASSWORD' | translate }}</mat-label>
-          <input matInput type="password" name="motDePasse" [(ngModel)]="request.motDePasse" required>
+          <mat-icon matPrefix class="field-icon">lock</mat-icon>
+          <input matInput [type]="showPassword ? 'text' : 'password'" name="motDePasse" [(ngModel)]="request.motDePasse" required autocomplete="new-password">
+          <button type="button" mat-icon-button matSuffix (click)="showPassword = !showPassword">
+            <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>{{ 'REGISTER.ROLE' | translate }}</mat-label>
+          <mat-icon matPrefix class="field-icon">badge</mat-icon>
           <mat-select name="role" [(ngModel)]="request.role" required>
             <mat-option value="STAGIAIRE">{{ 'REGISTER.ROLE_STAGIAIRE' | translate }}</mat-option>
             <mat-option value="ENCADRANT">{{ 'REGISTER.ROLE_ENCADRANT' | translate }}</mat-option>
@@ -36,49 +52,75 @@
         </mat-form-field>
 
         @if (request.role === 'STAGIAIRE') {
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>{{ 'REGISTER.ETABLISSEMENT' | translate }}</mat-label>
-            <input matInput name="etablissement" [(ngModel)]="request.etablissement" required>
-          </mat-form-field>
+          <div class="role-section">
+            <div class="role-section-title">
+              <mat-icon>school</mat-icon>
+              <span>Informations académiques</span>
+            </div>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>{{ 'REGISTER.NIVEAU_ETUDE' | translate }}</mat-label>
-            <input matInput name="niveauEtude" [(ngModel)]="request.niveauEtude">
-          </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>{{ 'REGISTER.ETABLISSEMENT' | translate }}</mat-label>
+              <input matInput name="etablissement" [(ngModel)]="request.etablissement" required>
+            </mat-form-field>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>{{ 'REGISTER.FILIERE' | translate }}</mat-label>
-            <input matInput name="filiere" [(ngModel)]="request.filiere">
-          </mat-form-field>
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>{{ 'REGISTER.NIVEAU_ETUDE' | translate }}</mat-label>
+                <input matInput name="niveauEtude" [(ngModel)]="request.niveauEtude">
+              </mat-form-field>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>{{ 'REGISTER.TELEPHONE' | translate }}</mat-label>
-            <input matInput name="telephone" [(ngModel)]="request.telephone">
-          </mat-form-field>
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>{{ 'REGISTER.FILIERE' | translate }}</mat-label>
+                <input matInput name="filiere" [(ngModel)]="request.filiere">
+              </mat-form-field>
+            </div>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>{{ 'REGISTER.TELEPHONE' | translate }}</mat-label>
+              <mat-icon matPrefix class="field-icon">phone</mat-icon>
+              <input matInput name="telephone" [(ngModel)]="request.telephone">
+            </mat-form-field>
+          </div>
         }
 
         @if (request.role === 'ENCADRANT') {
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>{{ 'REGISTER.SERVICE' | translate }}</mat-label>
-            <input matInput name="service" [(ngModel)]="request.service" required>
-          </mat-form-field>
+          <div class="role-section">
+            <div class="role-section-title">
+              <mat-icon>business</mat-icon>
+              <span>Informations professionnelles</span>
+            </div>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>{{ 'REGISTER.POSTE' | translate }}</mat-label>
-            <input matInput name="poste" [(ngModel)]="request.poste">
-          </mat-form-field>
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>{{ 'REGISTER.SERVICE' | translate }}</mat-label>
+                <input matInput name="service" [(ngModel)]="request.service" required>
+              </mat-form-field>
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>{{ 'REGISTER.TELEPHONE' | translate }}</mat-label>
-            <input matInput name="telephone" [(ngModel)]="request.telephone">
-          </mat-form-field>
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>{{ 'REGISTER.POSTE' | translate }}</mat-label>
+                <input matInput name="poste" [(ngModel)]="request.poste">
+              </mat-form-field>
+            </div>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>{{ 'REGISTER.TELEPHONE' | translate }}</mat-label>
+              <mat-icon matPrefix class="field-icon">phone</mat-icon>
+              <input matInput name="telephone" [(ngModel)]="request.telephone">
+            </mat-form-field>
+          </div>
         }
 
         @if (error) {
-          <p class="error">{{ error | translate }}</p>
+          <div class="error-banner">
+            <mat-icon class="error-icon">error_outline</mat-icon>
+            <span>{{ error | translate }}</span>
+          </div>
         }
 
-        <button mat-raised-button color="primary" type="submit" [disabled]="!registerForm.valid || loading" class="full-width">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!registerForm.valid || loading" class="full-width submit-btn">
+          @if (loading) {
+            <mat-spinner diameter="20" class="btn-spinner"></mat-spinner>
+          }
           {{ (loading ? 'REGISTER.SUBMITTING' : 'REGISTER.SUBMIT') | translate }}
         </button>
       </form>

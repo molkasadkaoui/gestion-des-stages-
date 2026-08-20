@@ -8,8 +8,8 @@ import lombok.Setter;
 @Setter
 public class CandidatureRequest {
 
-    @NotNull(message = "L'identifiant du stagiaire est obligatoire")
-    private Long stagiaireId;
+    // stagiaireId supprimé - récupéré du token JWT dans le service
+    // L'utilisateur authentifié est automatiquement identifié via SecurityContext
 
     @NotNull(message = "L'identifiant du stage est obligatoire")
     private Long stageId;
